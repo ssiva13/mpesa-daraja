@@ -74,7 +74,7 @@ class Authenticator
     {
         $allDarajaAps = $this->coreClient->config->get('mpesa.apps');
         if (!isset($allDarajaAps[$app])) {
-            throw new ConfigurationException("You do not have such a Daraja App on your config file. Make sure $app is set and filled ");
+            throw new ConfigurationException("You do not have such a Daraja App on your config file. Make sure $app configuration is set and filled ");
         }
         $secret = $this->coreClient->config->get('mpesa.apps.consumer_key');
         $key = $this->coreClient->config->get('mpesa.apps.consumer_secret');
