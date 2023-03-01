@@ -10,7 +10,7 @@ namespace Ssiva\MpesaDaraja\Http\Core;
 use Ssiva\MpesaDaraja\Http\Auth\Authenticator;
 use Ssiva\MpesaDaraja\Http\CoreClient;
 
-trait Mpesa
+trait MpesaTrait
 {
     protected string $endpoint;
     protected CoreClient $coreClient;

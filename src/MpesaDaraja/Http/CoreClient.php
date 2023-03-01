@@ -12,7 +12,6 @@ use Psr\Http\Message\ResponseInterface;
 use Ssiva\MpesaDaraja\Contracts\CacheStore;
 use Ssiva\MpesaDaraja\Contracts\ConfigurationStore;
 use Ssiva\MpesaDaraja\Http\Auth\Authenticator;
-use Ssiva\MpesaDaraja\Http\Core\Mpesa;
 
 class CoreClient
 {

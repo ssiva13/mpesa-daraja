@@ -11,12 +11,12 @@ namespace Ssiva\MpesaDaraja;
 use Ssiva\MpesaDaraja\Http\Auth\Authenticator;
 use Ssiva\MpesaDaraja\Http\Core\Cache;
 use Ssiva\MpesaDaraja\Http\Core\Config;
-use Ssiva\MpesaDaraja\Http\Core\Mpesa;
+use Ssiva\MpesaDaraja\Http\Core\MpesaTrait;
 use Ssiva\MpesaDaraja\Http\CoreClient;
 
-class MpesaDaraja
+class Mpesa
 {
-    use Mpesa;
+    use MpesaTrait;
     
     /**
      * @var \Ssiva\MpesaDaraja\Http\CoreClient

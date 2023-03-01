@@ -15,7 +15,7 @@
             "Ssiva\\MpesaDaraja\\": "src/MpesaDaraja"
         },
         "files": [
-          "src/MpesaDaraja/Http/Helpers/helpers.php"
+            "src/MpesaDaraja/Helpers/helpers.php"
         ]
     },
     "authors": [
