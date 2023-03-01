@@ -110,4 +110,12 @@ class Config implements ConfigurationStore, ArrayAccess
     public function value($value){
         return $value instanceof Closure ? $value() : $value;
     }
+    
+    public static function exists($array, $key): bool
+    {
+        if ($array instanceof ArrayAccess) {
+            return $array->offsetExists($key);
+        }
+        return array_key_exists($key, $array);
+    }
 }

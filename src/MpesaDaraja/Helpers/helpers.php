@@ -61,7 +61,7 @@ if (!function_exists('config')) {
 if (! function_exists('approot_path')) {
     function approot_path($file = ''): string
     {
-        return __DIR__."../../../../$file";
+        return __DIR__."/../../$file";
     }
 }
 

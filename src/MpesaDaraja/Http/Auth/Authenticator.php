@@ -30,6 +30,9 @@ class Authenticator
      */
     public function authenticate(string $app = 'default')
     {
+        if ($token = $this->coreClient->cache->get("{$app}_mpesa_access_token")) {
+            return $token;
+        }
         try {
             $credentials = $this->generateCredentials($app);
             

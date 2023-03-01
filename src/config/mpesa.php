@@ -5,11 +5,11 @@
  * @author   Simon Siva <simonsiva13@gmail.com>
  */
 return [
+    'api_url' => getenv('MPESA_URL', 'https://sandbox.safaricom.co.ke'),
     'apps' => [
         'default' => [
-            'api_url' => getenv('MPESA_URL', 'https://sandbox.safaricom.co.ke'),
-            'consumer_key' => gettype('MPESA_KEY', ''),
-            'consumer_secret' => gettype('MPESA_SECRET', ''),
+            'consumer_key' => getenv('MPESA_KEY', ''),
+            'consumer_secret' => getenv('MPESA_SECRET', ''),
         ],
     ],
     'cache' => [

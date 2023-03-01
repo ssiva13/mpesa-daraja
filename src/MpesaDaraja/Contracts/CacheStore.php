@@ -7,6 +7,8 @@
 
 namespace Ssiva\MpesaDaraja\Contracts;
 
+use Carbon\Carbon;
+
 interface CacheStore
 {
     /**
@@ -24,7 +26,7 @@ interface CacheStore
      *
      * @param string $key
      * @param mixed $value
-     * @param \DateTimeInterface|\DateInterval|float|int $minutes
+     * @param \Carbon\Carbon|null $dateTime
      */
-    public function put(string $key, $value, $minutes = null);
+    public function put(string $key, $value, Carbon $dateTime = null);
 }
