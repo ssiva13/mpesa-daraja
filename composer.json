@@ -1,0 +1,24 @@
+{
+    "name": "ssiva/mpesa-daraja",
+    "description": "M-Pesa Daraja Version API implementation",
+    "keywords": ["mpesa", "safaricom", "daraja", "api"],
+    "type": "library",
+    "require": {
+        "php": ">=7.4"
+    },
+    "require-dev": {
+    },
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Ssiva\\MpesaDaraja\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Simon Siva",
+            "email": "simonsiva13@gmail.com"
+        }
+    ],
+    "minimum-stability": "stable"
+}
