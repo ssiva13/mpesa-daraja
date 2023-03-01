@@ -1,3 +1,2 @@
-## A DARAJA API Library
-------------
-jhj
+## DARAJA API Library
+
