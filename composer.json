@@ -5,13 +5,18 @@
     "type": "library",
     "require": {
         "php": ">=7.4",
-        "guzzlehttp/guzzle": "^7.5"
+        "guzzlehttp/guzzle": "^7.5",
+        "nesbot/carbon": "^2.66",
+        "ext-json": "*"
     },
     "license": "MIT",
     "autoload": {
         "psr-4": {
             "Ssiva\\MpesaDaraja\\": "src/MpesaDaraja"
-        }
+        },
+        "files": [
+          "src/MpesaDaraja/Http/Helpers/helpers.php"
+        ]
     },
     "authors": [
         {
