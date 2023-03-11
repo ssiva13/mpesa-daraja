@@ -66,7 +66,7 @@ class STKPush
                 [
                     'body' => $body,
                     'headers' => [
-                        'Authorization' => 'Bearer ' . authToken($app)
+                        'Authorization' => 'Bearer ' . $this->coreClient->auth->authenticate($app)
                     ]
                 ]
             );
