@@ -19,6 +19,15 @@ class Authenticator
     protected ?string $token = null;
     
     /**
+     * Auth constructor.
+     * @param CoreClient $coreClient
+     */
+    public function __construct(CoreClient $coreClient)
+    {
+        $this->coreClient = $coreClient;
+    }
+    
+    /**
      * @throws \Ssiva\MpesaDaraja\Exceptions\ConfigurationException
      * @throws \Ssiva\MpesaDaraja\Exceptions\ErrorException
      * @throws \GuzzleHttp\Exception\GuzzleException

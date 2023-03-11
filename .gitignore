@@ -2,3 +2,4 @@
 /vendor/
 .env
 mpesa-sandbox.cer
+index.php
