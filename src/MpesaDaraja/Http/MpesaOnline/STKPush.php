@@ -28,11 +28,26 @@ class STKPush
     }
     
     /**
+     * Get the bearer token.
+     *
+     * @param $app
+     *
+     * @return string
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \Ssiva\MpesaDaraja\Exceptions\ConfigurationException
+     * @throws \Ssiva\MpesaDaraja\Exceptions\ErrorException
+     */
+    protected function bearer($app): string
+    {
+        return $this->coreClient->auth->authenticate($app);
+    }
+    
+    /**
      * @throws \Ssiva\MpesaDaraja\Exceptions\ErrorException
      * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws \Exception
      */
-    public function push($params = [], string $app = 'default'): ?string
+    public function push($params = [], string $app = 'default'): ? \stdClass
     {
         // Make sure all the indexes are in Uppercases as shown in docs
         $userParams = [];
@@ -59,14 +74,14 @@ class STKPush
         }
         
         try {
-            
+            $token = $this->bearer($app);
             $response = $this->coreClient->makeRequest(
                 $this->endpoint,
                 'POST',
                 [
-                    'body' => $body,
+                    'json' => $body,
                     'headers' => [
-                        'Authorization' => 'Bearer ' . $this->coreClient->auth->authenticate($app)
+                        'Authorization' => 'Bearer ' . $token,
                     ]
                 ]
             );

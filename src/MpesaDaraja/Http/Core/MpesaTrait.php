@@ -27,7 +27,11 @@ trait MpesaTrait
         return $auth->authenticate();
     }
     
-    public function stkPush($params = [], $app='default'): ?string
+    /**
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \Ssiva\MpesaDaraja\Exceptions\ErrorException
+     */
+    public function stkPush($params = [], $app='default'): ? \stdClass
     {
         $stk = new STKPush($this->coreClient);
         return $stk->push($params);
