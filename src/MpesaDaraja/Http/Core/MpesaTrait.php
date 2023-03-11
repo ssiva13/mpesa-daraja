@@ -30,6 +30,7 @@ trait MpesaTrait
     /**
      * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws \Ssiva\MpesaDaraja\Exceptions\ErrorException
+     * @throws \Ssiva\MpesaDaraja\Exceptions\ConfigurationException
      */
     public function stkPush($params = [], $app='default'): ? \stdClass
     {

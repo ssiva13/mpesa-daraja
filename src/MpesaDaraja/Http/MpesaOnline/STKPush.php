@@ -10,7 +10,8 @@
 namespace Ssiva\MpesaDaraja\Http\MpesaOnline;
 
 use Exception;
-use Ssiva\MpesaDaraja\Exceptions\AuthException;
+use GuzzleHttp\Exception\ClientException;
+use Ssiva\MpesaDaraja\Exceptions\MpesaGuzzleException;
 use Ssiva\MpesaDaraja\Http\CoreClient;
 
 class STKPush
@@ -43,11 +44,15 @@ class STKPush
     }
     
     /**
-     * @throws \Ssiva\MpesaDaraja\Exceptions\ErrorException
+     * @param array $params
+     * @param string $app
+     *
+     * @return mixed
      * @throws \GuzzleHttp\Exception\GuzzleException
-     * @throws \Exception
+     * @throws \Ssiva\MpesaDaraja\Exceptions\ConfigurationException
+     * @throws \Ssiva\MpesaDaraja\Exceptions\ErrorException
      */
-    public function push($params = [], string $app = 'default'): ? \stdClass
+    public function push(array $params = [], string $app = 'default')
     {
         // Make sure all the indexes are in Uppercases as shown in docs
         $userParams = [];
@@ -86,15 +91,12 @@ class STKPush
                 ]
             );
             
-            $contents = json_decode($response->getBody()->getContents());
-            
-            if (!empty($response->errorCode)) {
-                throw new Exception(json_encode($response));
-            }
-            return $contents;
+            $contents = $response->getBody()->getContents();
+            return json_decode($contents);
         }
-        catch (AuthException $exception) {
-            throw $exception->generateException();
+        catch (ClientException $exception) {
+            $response = $exception->getResponse();
+            return (new MpesaGuzzleException())->generateException($response);
         }
     }
     
