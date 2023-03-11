@@ -9,6 +9,7 @@ namespace Ssiva\MpesaDaraja\Http\Core;
 
 use Ssiva\MpesaDaraja\Http\Auth\Authenticator;
 use Ssiva\MpesaDaraja\Http\CoreClient;
+use Ssiva\MpesaDaraja\Http\MpesaOnline\STKPush;
 
 trait MpesaTrait
 {
@@ -22,8 +23,14 @@ trait MpesaTrait
      */
     public function authenticate($params = [], $app='default'): ?string
     {
-        $stk = new Authenticator($this->coreClient);
-        return $stk->authenticate();
+        $auth = new Authenticator($this->coreClient);
+        return $auth->authenticate();
+    }
+    
+    public function stkPush($params = [], $app='default'): ?string
+    {
+        $stk = new STKPush($this->coreClient);
+        return $stk->push($params);
     }
     
     

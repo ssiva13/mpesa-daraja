@@ -30,10 +30,19 @@ class CoreClient
         $this->config = $configStore;
         $this->cache = $cacheStore;
         $this->setBaseUrl();
+        $this->setAuthenticator();
         $this->httpClient = $this->setCoreClient();
         // $this->validator = new Validator();
         // $this->auth = $auth;
         
+    }
+    
+    /**
+     * Set authenticator to be used to get token
+     * @return void
+     */
+    public function setAuthenticator(){
+        $this->auth = new Authenticator($this);
     }
     
     public function setCoreClient(): Client
