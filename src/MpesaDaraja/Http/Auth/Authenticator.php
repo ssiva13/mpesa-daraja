@@ -44,8 +44,8 @@ class Authenticator
             $credentials = $this->generateCredentials($app);
             
             $response = $this->coreClient->makeRequest(
-                'GET',
                 $this->endpoint,
+                'GET',
                 [
                     'query' => [
                         'grant_type' => 'client_credentials'

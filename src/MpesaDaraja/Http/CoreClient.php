@@ -79,11 +79,13 @@ class CoreClient
     /**
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
-    public function makeRequest($method, $uri, $options = []): ResponseInterface
+    public function makeRequest($uri, $method, $options = []): ResponseInterface
     {
-        if($method === 'GET'){
-            return $this->httpClient->get($uri, $options);
+        switch ($method){
+            case 'POST':
+                return $this->httpClient->post($uri, $options);
+            default:
+                return $this->httpClient->get($uri, $options);
         }
-        return $this->httpClient->post($uri, $options);
     }
 }

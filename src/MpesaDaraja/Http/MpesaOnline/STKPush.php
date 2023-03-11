@@ -61,8 +61,8 @@ class STKPush
         try {
             
             $response = $this->coreClient->makeRequest(
-                'POST',
                 $this->endpoint,
+                'POST',
                 [
                     'body' => $body,
                     'headers' => [
