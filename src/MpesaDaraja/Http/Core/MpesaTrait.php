@@ -12,24 +12,17 @@ use Ssiva\MpesaDaraja\Http\CoreClient;
 
 trait MpesaTrait
 {
-    protected string $endpoint;
     protected CoreClient $coreClient;
-    
     protected array $validationRules = [];
-    
-    public function setCoreClient(CoreClient $coreClient)
-    {
-        $this->coreClient = $coreClient;
-        // $this->coreClient->setValidationRules($this->validationRules);
-    }
     
     /**
      * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws \Ssiva\MpesaDaraja\Exceptions\ErrorException
      * @throws \Ssiva\MpesaDaraja\Exceptions\ConfigurationException
      */
-    public function authenticate(){
-        $stk = new Authenticator();
+    public function authenticate($params = [], $app='default'): ?string
+    {
+        $stk = new Authenticator($this->coreClient);
         return $stk->authenticate();
     }
     

@@ -16,11 +16,7 @@ class Authenticator
 {
     protected string $endpoint = 'oauth/v1/generate';
     protected CoreClient $coreClient;
-    
-    public function setEngine(CoreClient $coreClient)
-    {
-        $this->coreClient = $coreClient;
-    }
+    protected ?string $token = null;
     
     /**
      * @throws \Ssiva\MpesaDaraja\Exceptions\ConfigurationException
@@ -28,10 +24,10 @@ class Authenticator
      * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws \Exception
      */
-    public function authenticate(string $app = 'default')
+    public function authenticate(string $app = 'default'): ?string
     {
-        if ($token = $this->coreClient->cache->get("{$app}_mpesa_access_token")) {
-            return $token;
+        if ($this->getCachedToken($app)) {
+            return $this->token;
         }
         try {
             $credentials = $this->generateCredentials($app);
@@ -55,9 +51,8 @@ class Authenticator
             if (!empty($response->errorCode)) {
                 throw new Exception(json_encode($response));
             }
-            
-            return $contents->access_token;
-            
+            $this->token = $contents->access_token;
+            return $this->token;
         }
         catch (AuthException $exception) {
             throw $exception->generateException();
@@ -72,16 +67,17 @@ class Authenticator
      */
     private function generateCredentials(string $app = 'default'): string
     {
-        $allDarajaAps = $this->coreClient->config->get('mpesa.apps');
-        if (!isset($allDarajaAps[$app])) {
-            throw new ConfigurationException("You do not have such a Daraja App on your config file. Make sure $app configuration is set and filled ");
+        $mpesaApp = $this->coreClient->config->get("mpesa.apps.$app");
+        if (!$mpesaApp) {
+            throw new ConfigurationException("You do not have such a Daraja App on your config file. Make sure $app app config is set and filled ");
         }
-        $secret = $this->coreClient->config->get('mpesa.apps.consumer_key');
-        $key = $this->coreClient->config->get('mpesa.apps.consumer_secret');
-        if (empty($key) || empty($secret)) {
-            throw new ConfigurationException("You have not set either consumer key or consumer secret for $app app");
+        $consumerKey = $this->coreClient->config->get("mpesa.apps.$app.consumer_key");
+        $consumerSecret = $this->coreClient->config->get("mpesa.apps.$app.consumer_secret");
+    
+        if (!$consumerKey || !$consumerSecret) {
+            throw new ConfigurationException("You have not set either consumer key or consumer secret for $app mpesa app");
         }
-        return base64_encode($key . ':' . $secret);
+        return base64_encode($consumerKey . ':' . $consumerSecret);
     }
     
     /**
@@ -93,8 +89,16 @@ class Authenticator
     public function storeAuthCredentials($contents, string $app): void
     {
         $expiry = addInterval(0.9 * $contents->expires_in);
-        $this->coreClient->cache->put("{$app}_mpesa_access_token", $contents->access_token, $expiry);
-        cache()->put("{$app}_mpesa_access_token", $contents->access_token, $expiry);
+        // $this->coreClient->cache->put("{$app}_mpesa_access_token", $contents->access_token, $expiry);
+        cacheStore()->put("{$app}_mpesa_access_token", $contents->access_token, $expiry);
+    }
+    
+    public function getCachedToken($app): bool
+    {
+        // $token = $this->coreClient->cache->get("{$app}_mpesa_access_token");
+        $token = cacheStore()->get("{$app}_mpesa_access_token");
+        $this->token = $token;
+        return (bool) $token;
     }
     
 }

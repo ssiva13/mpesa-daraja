@@ -12,12 +12,12 @@ use Ssiva\MpesaDaraja\Http\Core\Config;
 if (!function_exists('addInterval')) {
     /**
      * @param $value
-     * @param $unit
+     * @param string $unit
      * @param \Carbon\Carbon|null $time
      *
      * @return \Carbon\Carbon
      */
-    function addInterval($value, $unit = 'seconds', Carbon $time = null): Carbon
+    function addInterval($value, string $unit = 'seconds', Carbon $time = null): Carbon
     {
         $time =  $time ?: Carbon::now();
         switch ($unit){
@@ -39,25 +39,26 @@ if (!function_exists('addInterval')) {
     }
 }
 
-if (!function_exists('cache')) {
+if (!function_exists('cacheStore')) {
     /**
      * @return \Ssiva\MpesaDaraja\Http\Core\Cache
      */
-    function cache(): Cache
+    function cacheStore(): Cache
     {
-        return new Cache(\config());
+        return new Cache(\configStore());
     }
 }
 
-if (!function_exists('config')) {
+if (!function_exists('configStore')) {
     /**
      * @return \Ssiva\MpesaDaraja\Http\Core\Config
      */
-    function config(): Config
+    function configStore(): Config
     {
         return new Config();
     }
 }
+
 if (! function_exists('approot_path')) {
     function approot_path($file = ''): string
     {
