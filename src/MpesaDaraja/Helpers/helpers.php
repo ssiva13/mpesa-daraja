@@ -66,3 +66,37 @@ if (! function_exists('approot_path')) {
     }
 }
 
+if (! function_exists('now')) {
+    function now($format = ''): string
+    {
+        if($format){
+            return Carbon::now()->format($format);
+        }
+        return Carbon::now();
+    }
+}
+
+if (! function_exists('today')) {
+    function today($format = ''): string
+    {
+        if($format){
+            return Carbon::today()->format($format);
+        }
+        return Carbon::today();
+    }
+}
+
+if (! function_exists('parseDate')) {
+    function parseDate($string = ''): string
+    {
+        return Carbon::parse($string);
+    }
+}
+
+if (! function_exists('authToken')) {
+    function authToken($app = 'default'): string
+    {
+        return cacheStore()->get("{$app}_mpesa_access_token");
+    }
+}
+

@@ -2,6 +2,8 @@
 /**
  * Date 01/03/2023
  *
+ * Generate an OAuth Access Token
+ *
  * @author   Simon Siva <simonsiva13@gmail.com>
  */
 
@@ -76,12 +78,13 @@ class Authenticator
      */
     private function generateCredentials(string $app = 'default'): string
     {
-        $mpesaApp = $this->coreClient->config->get("mpesa.apps.$app");
+        // $mpesaApp = $this->coreClient->config->get("mpesa.apps.$app");
+        $mpesaApp = configStore()->get("mpesa.apps.$app");
         if (!$mpesaApp) {
             throw new ConfigurationException("You do not have such a Daraja App on your config file. Make sure $app app config is set and filled ");
         }
-        $consumerKey = $this->coreClient->config->get("mpesa.apps.$app.consumer_key");
-        $consumerSecret = $this->coreClient->config->get("mpesa.apps.$app.consumer_secret");
+        $consumerKey = configStore()->get("mpesa.apps.$app.consumer_key");
+        $consumerSecret = configStore()->get("mpesa.apps.$app.consumer_secret");
     
         if (!$consumerKey || !$consumerSecret) {
             throw new ConfigurationException("You have not set either consumer key or consumer secret for $app mpesa app");
