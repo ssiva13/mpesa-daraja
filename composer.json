@@ -4,15 +4,19 @@
     "keywords": ["mpesa", "safaricom", "daraja", "api"],
     "type": "library",
     "require": {
-        "php": ">=7.4"
-    },
-    "require-dev": {
+        "php": ">=7.4",
+        "guzzlehttp/guzzle": "^7.5",
+        "nesbot/carbon": "^2.66",
+        "ext-json": "*"
     },
     "license": "MIT",
     "autoload": {
         "psr-4": {
-            "Ssiva\\MpesaDaraja\\": "src/"
-        }
+            "Ssiva\\MpesaDaraja\\": "src/MpesaDaraja"
+        },
+        "files": [
+            "src/MpesaDaraja/Helpers/helpers.php"
+        ]
     },
     "authors": [
         {
