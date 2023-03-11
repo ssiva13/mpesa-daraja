@@ -12,14 +12,18 @@ use Exception;
 class AuthException extends Exception
 {
     
+    /**
+     * @throws \Ssiva\MpesaDaraja\Exceptions\ErrorException
+     * @throws \Ssiva\MpesaDaraja\Exceptions\ConfigurationException
+     */
     public function generateException()
     {
         $message = $this->getMessage();
         switch (\strtolower($message)) {
             case 'bad request: invalid credentials':
-                return new ConfigurationException('Invalid consumer key and secret combination');
+                throw new ConfigurationException('Invalid consumer key and secret combination');
             default:
-                return new ErrorException($message);
+                throw new ErrorException($message);
         }
     }
     

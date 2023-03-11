@@ -9,9 +9,6 @@
 
 namespace Ssiva\MpesaDaraja\Http\MpesaOnline;
 
-use Exception;
-use GuzzleHttp\Exception\ClientException;
-use Ssiva\MpesaDaraja\Exceptions\MpesaGuzzleException;
 use Ssiva\MpesaDaraja\Http\CoreClient;
 
 class STKPush
@@ -51,6 +48,7 @@ class STKPush
      * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws \Ssiva\MpesaDaraja\Exceptions\ConfigurationException
      * @throws \Ssiva\MpesaDaraja\Exceptions\ErrorException
+     * @throws \Exception
      */
     public function push(array $params = [], string $app = 'default')
     {
@@ -77,27 +75,21 @@ class STKPush
         if (empty($body['PartyA']) && !empty($body['PhoneNumber'])) {
             $body['PartyA'] = $body['PhoneNumber'];
         }
-        
-        try {
-            $token = $this->bearer($app);
-            $response = $this->coreClient->makeRequest(
-                $this->endpoint,
-                'POST',
-                [
-                    'json' => $body,
-                    'headers' => [
-                        'Authorization' => 'Bearer ' . $token,
-                    ]
+    
+        $token = $this->bearer($app);
+        $response = $this->coreClient->makeRequest(
+            $this->endpoint,
+            'POST',
+            [
+                'json' => $body,
+                'headers' => [
+                    'Authorization' => 'Bearer ' . $token,
                 ]
-            );
-            
-            $contents = $response->getBody()->getContents();
-            return json_decode($contents);
-        }
-        catch (ClientException $exception) {
-            $response = $exception->getResponse();
-            return (new MpesaGuzzleException())->generateException($response);
-        }
+            ]
+        );
+        $contents = $response->getBody()->getContents();
+        return json_decode($contents);
+        
     }
     
 }
