@@ -2,12 +2,13 @@
 /**
  * Date 01/03/2023
  *
+ * Generate an OAuth Access Token
+ *
  * @author   Simon Siva <simonsiva13@gmail.com>
  */
 
 namespace Ssiva\MpesaDaraja\Http\Auth;
 
-use Exception;
 use Ssiva\MpesaDaraja\Exceptions\AuthException;
 use Ssiva\MpesaDaraja\Exceptions\ConfigurationException;
 use Ssiva\MpesaDaraja\Http\CoreClient;
@@ -29,7 +30,6 @@ class Authenticator
     
     /**
      * @throws \Ssiva\MpesaDaraja\Exceptions\ConfigurationException
-     * @throws \Ssiva\MpesaDaraja\Exceptions\ErrorException
      * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws \Exception
      */
@@ -38,34 +38,31 @@ class Authenticator
         if ($this->getCachedToken($app)) {
             return $this->token;
         }
-        try {
-            $credentials = $this->generateCredentials($app);
-            
-            $response = $this->coreClient->makeRequest(
-                'GET',
-                $this->endpoint,
-                [
-                    'query' => [
-                        'grant_type' => 'client_credentials'
-                    ],
-                    'headers' => [
-                        'Authorization' => 'Basic ' . $credentials
-                    ]
+        
+        $credentials = $this->generateCredentials($app);
+        
+        $response = $this->coreClient->makeRequest(
+            $this->endpoint,
+            'GET',
+            [
+                'query' => [
+                    'grant_type' => 'client_credentials'
+                ],
+                'headers' => [
+                    'Authorization' => 'Basic ' . $credentials
                 ]
-            );
-            
-            $contents = json_decode($response->getBody()->getContents());
-            $this->storeAuthCredentials($contents, $app);
+            ]
+        );
+        
+        $contents = json_decode($response->getBody()->getContents());
+        $this->storeAuthCredentials($contents, $app);
+
+        if (!empty($response->errorCode)) {
+            throw new AuthException(json_encode($response));
+        }
+        $this->token = $contents->access_token;
+        return $this->token;
     
-            if (!empty($response->errorCode)) {
-                throw new Exception(json_encode($response));
-            }
-            $this->token = $contents->access_token;
-            return $this->token;
-        }
-        catch (AuthException $exception) {
-            throw $exception->generateException();
-        }
     }
     
     /**
@@ -76,12 +73,13 @@ class Authenticator
      */
     private function generateCredentials(string $app = 'default'): string
     {
-        $mpesaApp = $this->coreClient->config->get("mpesa.apps.$app");
+        // $mpesaApp = $this->coreClient->config->get("mpesa.apps.$app");
+        $mpesaApp = configStore()->get("mpesa.apps.$app");
         if (!$mpesaApp) {
             throw new ConfigurationException("You do not have such a Daraja App on your config file. Make sure $app app config is set and filled ");
         }
-        $consumerKey = $this->coreClient->config->get("mpesa.apps.$app.consumer_key");
-        $consumerSecret = $this->coreClient->config->get("mpesa.apps.$app.consumer_secret");
+        $consumerKey = configStore()->get("mpesa.apps.$app.consumer_key");
+        $consumerSecret = configStore()->get("mpesa.apps.$app.consumer_secret");
     
         if (!$consumerKey || !$consumerSecret) {
             throw new ConfigurationException("You have not set either consumer key or consumer secret for $app mpesa app");

@@ -8,9 +8,12 @@
 namespace Ssiva\MpesaDaraja\Http;
 
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\ClientException;
+use GuzzleHttp\Exception\ServerException;
 use Psr\Http\Message\ResponseInterface;
 use Ssiva\MpesaDaraja\Contracts\CacheStore;
 use Ssiva\MpesaDaraja\Contracts\ConfigurationStore;
+use Ssiva\MpesaDaraja\Exceptions\MpesaGuzzleException;
 use Ssiva\MpesaDaraja\Http\Auth\Authenticator;
 
 class CoreClient
@@ -30,10 +33,19 @@ class CoreClient
         $this->config = $configStore;
         $this->cache = $cacheStore;
         $this->setBaseUrl();
+        $this->setAuthenticator();
         $this->httpClient = $this->setCoreClient();
         // $this->validator = new Validator();
         // $this->auth = $auth;
         
+    }
+    
+    /**
+     * Set authenticator to be used to get token
+     * @return void
+     */
+    public function setAuthenticator(){
+        $this->auth = new Authenticator($this);
     }
     
     public function setCoreClient(): Client
@@ -69,12 +81,20 @@ class CoreClient
     
     /**
      * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \Exception
      */
-    public function makeRequest($method, $uri, $options = []): ResponseInterface
+    public function makeRequest($uri, $method, $options = []): ResponseInterface
     {
-        if($method === 'GET'){
-            return $this->httpClient->get($uri, $options);
+        try {
+            switch ($method){
+                case 'POST':
+                    return $this->httpClient->post($uri, $options);
+                default:
+                    return $this->httpClient->get($uri, $options);
+            }
         }
-        return $this->httpClient->post($uri, $options);
+        catch (ClientException|ServerException $exception) {
+            return (new MpesaGuzzleException())->generateException($exception);
+        }
     }
 }
