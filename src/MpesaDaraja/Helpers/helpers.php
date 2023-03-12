@@ -100,3 +100,17 @@ if (! function_exists('authToken')) {
     }
 }
 
+if (! function_exists('formatParams')) {
+    function formatParams($array = []): array
+    {
+        return array_map("modify_keys", array_keys($array), $array);
+    }
+}
+
+if (! function_exists('modify_keys')) {
+    function modify_keys($key, $value): string
+    {
+        return ucwords($key);
+    }
+}
+

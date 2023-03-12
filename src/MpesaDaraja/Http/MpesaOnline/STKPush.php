@@ -53,10 +53,8 @@ class STKPush
     public function push(array $params = [], string $app = 'default')
     {
         // Make sure all the indexes are in Uppercases as shown in docs
-        $userParams = [];
-        foreach ($params as $key => $value) {
-            $userParams[ucwords($key)] = $value;
-        }
+        $userParams = formatParams($params);
+        
         $time = now('YmdHis');
         $shortCode = configStore()->get('mpesa.mpesa_online.short_code');
         $passkey = configStore()->get('mpesa.mpesa_online.passkey');
