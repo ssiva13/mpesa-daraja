@@ -100,3 +100,19 @@ if (! function_exists('authToken')) {
     }
 }
 
+if (! function_exists('formatParams')) {
+    function formatParams($array = []): array
+    {
+        $modified_keys = array_map("modify_keys", array_keys($array), $array);
+        // use array_combine() to create a new array with modified keys
+        return  array_combine($modified_keys, $array);
+    }
+}
+
+if (! function_exists('modify_keys')) {
+    function modify_keys($key, $value): string
+    {
+        return ucwords($key);
+    }
+}
+
