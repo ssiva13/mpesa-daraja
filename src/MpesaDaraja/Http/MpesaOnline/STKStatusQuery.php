@@ -2,7 +2,7 @@
 /**
  * Date 01/03/2023
  *
- * Initiate a Lipa na M-Pesa Online Payment
+ * Query the status of a Lipa na M-Pesa Online Payment
  *
  * @author   Simon Siva <simonsiva13@gmail.com>
  */
@@ -11,9 +11,9 @@ namespace Ssiva\MpesaDaraja\Http\MpesaOnline;
 
 use Ssiva\MpesaDaraja\Http\CoreClient;
 
-class STKPush
+class STKStatusQuery
 {
-    protected string $endpoint = 'mpesa/stkpush/v1/processrequest';
+    protected string $endpoint = 'mpesa/stkpushquery/v1/query';
     protected CoreClient $coreClient;
     
     /**
@@ -48,7 +48,7 @@ class STKPush
      * @throws \Ssiva\MpesaDaraja\Exceptions\ConfigurationException
      * @throws \Exception
      */
-    public function push(array $params = [], string $app = 'default')
+    public function stkpushquery(array $params = [], string $app = 'default')
     {
         // Make sure all the indexes are in Uppercases as shown in docs
         $userParams = formatParams($params);
@@ -60,18 +60,12 @@ class STKPush
         // Computed and params from config file.
         $configParams = [
             'BusinessShortCode' => $shortCode,
-            'CallBackURL' => configStore()->get('mpesa.mpesa_online.callback'),
-            'TransactionType' => configStore()->get('mpesa.mpesa_online.default_transaction_type'),
             'Password' => $password,
-            'PartyB' => $shortCode,
             'Timestamp' => $time,
         ];
         // This gives precedence to params coming from user allowing them to override config params
         $body = array_merge($configParams, $userParams);
-        if (empty($body['PartyA']) && !empty($body['PhoneNumber'])) {
-            $body['PartyA'] = $body['PhoneNumber'];
-        }
-    
+        
         $token = $this->bearer($app);
         $response = $this->coreClient->makeRequest(
             $this->endpoint,
