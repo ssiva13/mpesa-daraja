@@ -11,7 +11,7 @@ use Ssiva\MpesaDaraja\Http\AbstractDarajaQuery;
 
 class Reversal extends AbstractDarajaQuery
 {
-    protected string $endpoint = 'mpesa/reversal/v1/query';
+    protected string $endpoint = 'mpesa/reversal/v1/request';
     
     public function submitRequest(array $params = [], string $app = 'default')
     {
