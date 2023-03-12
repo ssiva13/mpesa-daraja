@@ -9,9 +9,9 @@ namespace Ssiva\MpesaDaraja\Http\Account;
 
 use Ssiva\MpesaDaraja\Http\AbstractDarajaQuery;
 
-class Balance extends AbstractDarajaQuery
+class Reversal extends AbstractDarajaQuery
 {
-    protected string $endpoint = 'mpesa/accountbalance/v1/query';
+    protected string $endpoint = 'mpesa/reversal/v1/request';
     
     public function submitRequest(array $params = [], string $app = 'default')
     {
@@ -22,7 +22,7 @@ class Balance extends AbstractDarajaQuery
         $resultCallback  = configStore()->get('mpesa.account.result_url');
         $timeoutCallback  = configStore()->get('mpesa.account.timeout_url');
         $initiator  = configStore()->get('mpesa.account.initiator_name');
-        $commandId  = configStore()->get('mpesa.account.balance.default_command_id');
+        $commandId  = configStore()->get('mpesa.account.reversal.default_command_id');
         $initiatorPass = configStore()->get('mpesa.account.security_credential');
         $securityCert = configStore()->get('mpesa.account.security_cert');
         $identifierType = configStore()->get('mpesa.account.identifier_type');
@@ -30,12 +30,15 @@ class Balance extends AbstractDarajaQuery
         $configParams = [
             'Initiator' => $initiator,
             'SecurityCredential' => computeSecurityCredential($initiatorPass, $securityCert),
-            'IdentifierType' => $identifierType,
+            'RecieverIdentifierType' => $identifierType,
+            // 'IdentifierType' => $identifierType,
             'CommandID' => $commandId,
-            'PartyA' => $shortCode,
+            'ReceiverParty' => $shortCode,
+            // 'PartyA' => $shortCode,
             'QueueTimeOutURL' => $timeoutCallback,
             'ResultURL' => $resultCallback,
         ];
+        
         // This gives precedence to params coming from user allowing them to override config params
         $body = array_merge($configParams, $userParams);
         $token = $this->bearer($app);
