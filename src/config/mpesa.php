@@ -46,6 +46,9 @@ return [
         'reversal' => [
             'default_command_id' => 'TransactionReversal',
         ],
+        'transaction' => [
+            'default_command_id' => 'TransactionStatusQuery',
+        ],
         
     ],
     /*

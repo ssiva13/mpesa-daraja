@@ -9,12 +9,12 @@ namespace Ssiva\MpesaDaraja\Http\Account;
 
 use Ssiva\MpesaDaraja\Http\AbstractDarajaQuery;
 
-class Reversal extends AbstractDarajaQuery
+class TransactionStatus extends AbstractDarajaQuery
 {
-    protected string $endpoint = 'mpesa/reversal/v1/request';
+    protected string $endpoint = 'mpesa/transactionstatus/v1/query';
     
     /*
-     * Reverse an M-Pesa Transaction
+     * Query the Transaction Status of an M-Pesa Transaction
      */
     public function submitRequest(array $params = [], string $app = 'default')
     {
@@ -25,7 +25,7 @@ class Reversal extends AbstractDarajaQuery
         $resultCallback  = configStore()->get('mpesa.account.result_url');
         $timeoutCallback  = configStore()->get('mpesa.account.timeout_url');
         $initiator  = configStore()->get('mpesa.account.initiator_name');
-        $commandId  = configStore()->get('mpesa.account.reversal.default_command_id');
+        $commandId  = configStore()->get('mpesa.account.transaction.default_command_id');
         $initiatorPass = configStore()->get('mpesa.account.security_credential');
         $securityCert = configStore()->get('mpesa.account.security_cert');
         $identifierType = configStore()->get('mpesa.account.identifier_type');
@@ -33,11 +33,9 @@ class Reversal extends AbstractDarajaQuery
         $configParams = [
             'Initiator' => $initiator,
             'SecurityCredential' => computeSecurityCredential($initiatorPass, $securityCert),
-            'RecieverIdentifierType' => $identifierType,
-            // 'IdentifierType' => $identifierType,
+            'IdentifierType' => $identifierType,
             'CommandID' => $commandId,
-            'ReceiverParty' => $shortCode,
-            // 'PartyA' => $shortCode,
+            'PartyA' => $shortCode,
             'QueueTimeOutURL' => $timeoutCallback,
             'ResultURL' => $resultCallback,
         ];
