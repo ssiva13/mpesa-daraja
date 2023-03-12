@@ -116,3 +116,20 @@ if (! function_exists('modify_keys')) {
     }
 }
 
+if (! function_exists('computeSecurityCredential')) {
+    /**
+     * @throws \Exception
+     */
+    function computeSecurityCredential($initiatorPass): string
+    {
+        // $pubKeyFile =  __DIR__ . '/../../../mpesa-sandbox.cer';
+        $pubKeyFile =  approot_path('mpesa-sandbox.cer');
+        if(!is_file($pubKeyFile)){
+            throw new \Exception("Please provide a valid public key file");
+        }
+        $pubKey = file_get_contents($pubKeyFile);
+        openssl_public_encrypt($initiatorPass, $encrypted, $pubKey, OPENSSL_PKCS1_PADDING);
+        return base64_encode($encrypted);
+    }
+}
+
