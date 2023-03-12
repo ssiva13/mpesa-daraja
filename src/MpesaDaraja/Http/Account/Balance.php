@@ -22,7 +22,7 @@ class Balance extends AbstractDarajaQuery
         $resultCallback  = configStore()->get('mpesa.account.result_url');
         $timeoutCallback  = configStore()->get('mpesa.account.timeout_url');
         $initiator  = configStore()->get('mpesa.account.initiator_name');
-        $commandId  = configStore()->get('mpesa.account.default_command_id');
+        $commandId  = configStore()->get('mpesa.account.balance.default_command_id');
         $initiatorPass = configStore()->get('mpesa.account.security_credential');
         $securityCert = configStore()->get('mpesa.account.security_cert');
         $identifierType = configStore()->get('mpesa.account.identifier_type');
