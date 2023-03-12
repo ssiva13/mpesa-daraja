@@ -9,6 +9,7 @@ namespace Ssiva\MpesaDaraja\Http\Core;
 
 use Ssiva\MpesaDaraja\Http\Account\Balance;
 use Ssiva\MpesaDaraja\Http\Account\Reversal;
+use Ssiva\MpesaDaraja\Http\Account\TransactionStatus;
 use Ssiva\MpesaDaraja\Http\Auth\Authenticator;
 use Ssiva\MpesaDaraja\Http\CoreClient;
 use Ssiva\MpesaDaraja\Http\MpesaOnline\STKPush;
@@ -78,6 +79,16 @@ trait MpesaTrait
     public function reversal(array $params = [], string $app = 'default')
     {
         $mpesa = new Reversal($this->coreClient);
+        return $mpesa->submitRequest($params);
+    }
+    
+    /**
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \Ssiva\MpesaDaraja\Exceptions\ConfigurationException
+     */
+    public function transactionStatus(array $params = [], string $app = 'default')
+    {
+        $mpesa = new TransactionStatus($this->coreClient);
         return $mpesa->submitRequest($params);
     }
     
