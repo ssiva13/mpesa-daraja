@@ -38,6 +38,7 @@ return [
         'initiator_name' => getenv('MPESA_INITIATOR_NAME'),
         'default_command_id' => 'AccountBalance',
         'security_credential' => getenv('MPESA_SECURITY_CREDENTIAL'),
+        'security_cert' => getenv('MPESA_SECURITY_CERT'),
         'identifier_type' => getenv('MPESA_ACCOUNT_IDENTIFIER'),
         
     ],

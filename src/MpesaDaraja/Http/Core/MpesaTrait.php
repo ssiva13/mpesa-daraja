@@ -7,6 +7,7 @@
 
 namespace Ssiva\MpesaDaraja\Http\Core;
 
+use Ssiva\MpesaDaraja\Http\Account\Balance;
 use Ssiva\MpesaDaraja\Http\Auth\Authenticator;
 use Ssiva\MpesaDaraja\Http\CoreClient;
 use Ssiva\MpesaDaraja\Http\MpesaOnline\STKPush;
@@ -57,6 +58,16 @@ trait MpesaTrait
     {
         $stk = new STKStatusQuery($this->coreClient);
         return $stk->stkpushquery($params);
+    }
+    
+    /**
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \Ssiva\MpesaDaraja\Exceptions\ConfigurationException
+     */
+    public function accountBalance(array $params = [], string $app = 'default')
+    {
+        $stk = new Balance($this->coreClient);
+        return $stk->submitRequest($params);
     }
     
 }

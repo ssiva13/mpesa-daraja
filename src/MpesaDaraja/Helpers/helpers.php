@@ -120,10 +120,10 @@ if (! function_exists('computeSecurityCredential')) {
     /**
      * @throws \Exception
      */
-    function computeSecurityCredential($initiatorPass): string
+    function computeSecurityCredential($initiatorPass, $securityCert): string
     {
-        // $pubKeyFile =  __DIR__ . '/../../../mpesa-sandbox.cer';
-        $pubKeyFile =  approot_path('mpesa-sandbox.cer');
+        // laravel and lumen
+        $pubKeyFile =  \base_path($securityCert);
         if(!is_file($pubKeyFile)){
             throw new \Exception("Please provide a valid public key file");
         }
