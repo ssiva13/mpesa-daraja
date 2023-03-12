@@ -13,6 +13,9 @@ class Reversal extends AbstractDarajaQuery
 {
     protected string $endpoint = 'mpesa/reversal/v1/request';
     
+    /*
+     * Reverse an M-Pesa Transaction
+     */
     public function submitRequest(array $params = [], string $app = 'default')
     {
         // Make sure all the indexes are in Uppercases as shown in docs

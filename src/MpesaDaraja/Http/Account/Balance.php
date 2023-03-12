@@ -13,6 +13,9 @@ class Balance extends AbstractDarajaQuery
 {
     protected string $endpoint = 'mpesa/accountbalance/v1/query';
     
+    /*
+     * Make an Account Balance query
+     */
     public function submitRequest(array $params = [], string $app = 'default')
     {
         // Make sure all the indexes are in Uppercases as shown in docs
