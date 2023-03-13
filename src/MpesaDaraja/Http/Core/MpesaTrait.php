@@ -45,7 +45,7 @@ trait MpesaTrait
     public function stkPush(array $params = [], string $app = 'default')
     {
         $stk = new STKPush($this->coreClient);
-        return $stk->push($params);
+        return $stk->submitRequest($params);
     }
     
     /**
@@ -59,7 +59,7 @@ trait MpesaTrait
     public function stkPushQuery(array $params = [], string $app = 'default')
     {
         $stk = new STKStatusQuery($this->coreClient);
-        return $stk->stkpushquery($params);
+        return $stk->submitRequest($params);
     }
     
     /**

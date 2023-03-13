@@ -7,7 +7,7 @@
 
 namespace Ssiva\MpesaDaraja\Http;
 
-class AbstractDarajaQuery implements DarajaQueryInterface
+abstract class AbstractDarajaQuery implements DarajaQueryInterface
 {
     protected string $endpoint = '';
     protected CoreClient $coreClient;

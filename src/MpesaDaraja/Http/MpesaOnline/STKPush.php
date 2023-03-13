@@ -9,35 +9,11 @@
 
 namespace Ssiva\MpesaDaraja\Http\MpesaOnline;
 
-use Ssiva\MpesaDaraja\Http\CoreClient;
+use Ssiva\MpesaDaraja\Http\AbstractDarajaQuery;
 
-class STKPush
+class STKPush extends AbstractDarajaQuery
 {
     protected string $endpoint = 'mpesa/stkpush/v1/processrequest';
-    protected CoreClient $coreClient;
-    
-    /**
-     * Auth constructor.
-     * @param CoreClient $coreClient
-     */
-    public function __construct(CoreClient $coreClient)
-    {
-        $this->coreClient = $coreClient;
-    }
-    
-    /**
-     * Get the bearer token.
-     *
-     * @param $app
-     *
-     * @return string
-     * @throws \GuzzleHttp\Exception\GuzzleException
-     * @throws \Ssiva\MpesaDaraja\Exceptions\ConfigurationException
-     */
-    protected function bearer($app): string
-    {
-        return $this->coreClient->auth->authenticate($app);
-    }
     
     /**
      * @param array $params
@@ -48,7 +24,7 @@ class STKPush
      * @throws \Ssiva\MpesaDaraja\Exceptions\ConfigurationException
      * @throws \Exception
      */
-    public function push(array $params = [], string $app = 'default')
+    public function submitRequest(array $params = [], string $app = 'default')
     {
         // Make sure all the indexes are in Uppercases as shown in docs
         $userParams = formatParams($params);

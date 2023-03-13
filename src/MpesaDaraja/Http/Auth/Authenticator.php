@@ -11,22 +11,12 @@ namespace Ssiva\MpesaDaraja\Http\Auth;
 
 use Ssiva\MpesaDaraja\Exceptions\AuthException;
 use Ssiva\MpesaDaraja\Exceptions\ConfigurationException;
-use Ssiva\MpesaDaraja\Http\CoreClient;
+use Ssiva\MpesaDaraja\Http\AbstractDarajaQuery;
 
-class Authenticator
+class Authenticator extends AbstractDarajaQuery
 {
     protected string $endpoint = 'oauth/v1/generate';
-    protected CoreClient $coreClient;
     protected ?string $token = null;
-    
-    /**
-     * Auth constructor.
-     * @param CoreClient $coreClient
-     */
-    public function __construct(CoreClient $coreClient)
-    {
-        $this->coreClient = $coreClient;
-    }
     
     /**
      * @throws \Ssiva\MpesaDaraja\Exceptions\ConfigurationException
