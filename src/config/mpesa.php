@@ -96,4 +96,20 @@ return [
         'default_transaction_type' => getenv('MPESA_ONLINE_TRANSACTION_TYPE')
 
     ],
+    /*
+    |--------------------------------------------------------------------------
+    | B2C API Config
+    |--------------------------------------------------------------------------
+    |
+    */
+    'b2c' => [
+        'short_code' => getenv('MPESA_SHORTCODE'),
+        'result_url' => getenv('MPESA_RESULT_URL'),
+        'timeout_url' => getenv('MPESA_TIMEOUT_URL'),
+        'initiator_name' => getenv('MPESA_INITIATOR_NAME'),
+        'security_credential' => getenv('MPESA_SECURITY_CREDENTIAL'),
+        'security_cert' => getenv('MPESA_SECURITY_CERT'),
+        'identifier_type' => getenv('MPESA_ACCOUNT_IDENTIFIER'),
+        'default_command_id' => getenv('MPESA_B2C_COMMAND'),
+    ],
 ];
