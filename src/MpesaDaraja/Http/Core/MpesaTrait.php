@@ -11,6 +11,7 @@ use Ssiva\MpesaDaraja\Http\Account\Balance;
 use Ssiva\MpesaDaraja\Http\Account\Reversal;
 use Ssiva\MpesaDaraja\Http\Account\TransactionStatus;
 use Ssiva\MpesaDaraja\Http\Auth\Authenticator;
+use Ssiva\MpesaDaraja\Http\B2C\DispatchPayment;
 use Ssiva\MpesaDaraja\Http\CoreClient;
 use Ssiva\MpesaDaraja\Http\MpesaOnline\STKPush;
 use Ssiva\MpesaDaraja\Http\MpesaOnline\STKStatusQuery;
@@ -89,6 +90,16 @@ trait MpesaTrait
     public function transactionStatus(array $params = [], string $app = 'default')
     {
         $mpesa = new TransactionStatus($this->coreClient);
+        return $mpesa->submitRequest($params);
+    }
+    
+    /**
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \Ssiva\MpesaDaraja\Exceptions\ConfigurationException
+     */
+    public function b2cPayment(array $params = [], string $app = 'default')
+    {
+        $mpesa = new DispatchPayment($this->coreClient);
         return $mpesa->submitRequest($params);
     }
     
