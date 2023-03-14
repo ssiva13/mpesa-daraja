@@ -13,6 +13,7 @@ use Ssiva\MpesaDaraja\Http\Account\TransactionStatus;
 use Ssiva\MpesaDaraja\Http\Auth\Authenticator;
 use Ssiva\MpesaDaraja\Http\B2B\DispatchPayment as PayB2B;
 use Ssiva\MpesaDaraja\Http\B2C\DispatchPayment as PayB2C;
+use Ssiva\MpesaDaraja\Http\C2B\DispatchPayment as PayC2B;
 use Ssiva\MpesaDaraja\Http\CoreClient;
 use Ssiva\MpesaDaraja\Http\MpesaOnline\STKPush;
 use Ssiva\MpesaDaraja\Http\MpesaOnline\STKStatusQuery;
@@ -111,6 +112,16 @@ trait MpesaTrait
     public function b2bPayment(array $params = [], string $app = 'default')
     {
         $mpesa = new PayB2B($this->coreClient);
+        return $mpesa->submitRequest($params);
+    }
+
+    /**
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \Ssiva\MpesaDaraja\Exceptions\ConfigurationException
+     */
+    public function c2bPayment(array $params = [], string $app = 'default')
+    {
+        $mpesa = new PayC2B($this->coreClient);
         return $mpesa->submitRequest($params);
     }
     
