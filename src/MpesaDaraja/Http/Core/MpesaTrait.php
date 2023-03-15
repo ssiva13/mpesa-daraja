@@ -13,7 +13,8 @@ use Ssiva\MpesaDaraja\Http\Account\TransactionStatus;
 use Ssiva\MpesaDaraja\Http\Auth\Authenticator;
 use Ssiva\MpesaDaraja\Http\B2B\DispatchPayment as PayB2B;
 use Ssiva\MpesaDaraja\Http\B2C\DispatchPayment as PayB2C;
-use Ssiva\MpesaDaraja\Http\C2B\DispatchPayment as PayC2B;
+use Ssiva\MpesaDaraja\Http\C2B\ProcessCustomerPayment as PayC2B;
+use Ssiva\MpesaDaraja\Http\C2B\RegisterUrls as RegisterC2BUrls;
 use Ssiva\MpesaDaraja\Http\CoreClient;
 use Ssiva\MpesaDaraja\Http\MpesaOnline\STKPush;
 use Ssiva\MpesaDaraja\Http\MpesaOnline\STKStatusQuery;
@@ -123,6 +124,16 @@ trait MpesaTrait
     {
         $mpesa = new PayC2B($this->coreClient);
         return $mpesa->submitRequest($params);
+    }
+
+    /**
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \Ssiva\MpesaDaraja\Exceptions\ConfigurationException
+     */
+    public function registerC2BUrls(array $params = [], string $app = 'default')
+    {
+        $registerUrls = new RegisterC2BUrls($this->coreClient);
+        return $registerUrls->submitRequest($params);
     }
     
 }
