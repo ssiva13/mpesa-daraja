@@ -11,9 +11,9 @@ namespace Ssiva\MpesaDaraja\Http\C2B;
 
 use Ssiva\MpesaDaraja\Http\AbstractDarajaQuery;
 
-class DispatchPayment extends AbstractDarajaQuery
+class ProcessCustomerPayment extends AbstractDarajaQuery
 {
-    protected string $endpoint = 'mpesa/c2b/v1/paymentrequest';
+    protected string $endpoint = 'mpesa/c2b/v1/simulate';
 
     /*
      * Make a C2B Payment Request
