@@ -145,6 +145,9 @@ return [
         'security_cert' => getenv('MPESA_SECURITY_CERT'),
         'identifier_type' => getenv('MPESA_ACCOUNT_IDENTIFIER'),
         'default_command_id' => getenv('MPESA_C2B_COMMAND'),
+        'confirmation_url' => getenv('MPESA_C2B_CONFIRMATION_URL'),
+        'validation_url' => getenv('MPESA_C2B_VALIDATION_URL'),
+        'response_type' => getenv('MPESA_C2B_RESPONSE_TYPE'),
     ],
     
 ];
