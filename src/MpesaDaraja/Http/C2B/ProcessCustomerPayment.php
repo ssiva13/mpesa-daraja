@@ -25,22 +25,12 @@ class ProcessCustomerPayment extends AbstractDarajaQuery
         // , BillRefNumber  (Account Number N/B for PayBill Only ), ShortCode(optional)
         $userParams = formatParams($params);
 
-        $initiator = configStore()->get('mpesa.c2b.initiator_name');
-        $initiatorPass = configStore()->get('mpesa.c2b.security_credential');
         $commandId = configStore()->get('mpesa.c2b.default_command_id');
         $shortCode = configStore()->get('mpesa.c2b.short_code');
-        $timeoutCallback = configStore()->get('mpesa.c2b.timeout_url');
-        $resultCallback = configStore()->get('mpesa.c2b.result_url');
-        // security cert
-        $securityCert = configStore()->get('mpesa.c2b.security_cert');
 
         $configParams = [
-            'InitiatorName' => $initiator,
-            'SecurityCredential' => computeSecurityCredential($initiatorPass, $securityCert),
             'CommandID' => $commandId,
             'ShortCode' => $shortCode,
-            'QueueTimeOutURL' => $timeoutCallback,
-            'ResultURL' => $resultCallback,
         ];
 
         // This gives precedence to params coming from user allowing them to override config params
