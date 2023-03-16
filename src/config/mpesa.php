@@ -130,5 +130,18 @@ return [
         'sender_identifier' => getenv('MPESA_B2B_SENDER_ID'),
         'receiver_identifier' => getenv('MPESA_B2B_RECEIVER_ID'),
     ],
+    /*
+       |--------------------------------------------------------------------------
+       | C2B API Config
+       |--------------------------------------------------------------------------
+       |
+       */
+    'c2b' => [
+        'short_code' => getenv('MPESA_SHORTCODE'),
+        'default_command_id' => getenv('MPESA_C2B_COMMAND'),
+        'confirmation_url' => getenv('MPESA_C2B_CONFIRMATION_URL'),
+        'validation_url' => getenv('MPESA_C2B_VALIDATION_URL'),
+        'response_type' => getenv('MPESA_C2B_RESPONSE_TYPE'),
+    ],
     
 ];
