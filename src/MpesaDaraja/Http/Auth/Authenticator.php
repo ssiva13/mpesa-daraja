@@ -17,6 +17,10 @@ class Authenticator extends AbstractDarajaQuery
 {
     protected string $endpoint = 'oauth/v1/generate';
     protected ?string $token = null;
+    protected array $validationRules = [
+        'consumer_key' => 'required|string',
+        'consumer_secret' => 'required|string',
+    ];
     
     /**
      * @throws \Ssiva\MpesaDaraja\Exceptions\ConfigurationException
@@ -40,7 +44,8 @@ class Authenticator extends AbstractDarajaQuery
                 ],
                 'headers' => [
                     'Authorization' => 'Basic ' . $credentials
-                ]
+                ],
+                'app' => $app
             ]
         );
         

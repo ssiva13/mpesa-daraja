@@ -13,8 +13,10 @@ use GuzzleHttp\Exception\ServerException;
 use Psr\Http\Message\ResponseInterface;
 use Ssiva\MpesaDaraja\Contracts\CacheStore;
 use Ssiva\MpesaDaraja\Contracts\ConfigurationStore;
+use Ssiva\MpesaDaraja\Exceptions\ConfigurationException;
 use Ssiva\MpesaDaraja\Exceptions\MpesaGuzzleException;
 use Ssiva\MpesaDaraja\Http\Auth\Authenticator;
+use Ssiva\MpesaDaraja\Validation\Validator;
 
 class CoreClient
 {
@@ -24,7 +26,7 @@ class CoreClient
     public array $validationRules;
     public Client $httpClient;
     
-    public $validator;
+    public Validator $validator;
     public Authenticator $auth;
     
     
@@ -32,17 +34,19 @@ class CoreClient
     {
         $this->config = $configStore;
         $this->cache = $cacheStore;
+        $this->validator = new Validator();
         $this->setBaseUrl();
         $this->setAuthenticator();
         $this->httpClient = $this->setCoreClient();
-        // $this->validator = new Validator();
         // $this->auth = $auth;
         
     }
     
     /**
      * Set authenticator to be used to get token
+     *
      * @return void
+     * @throws \ReflectionException
      */
     public function setAuthenticator(){
         $this->auth = new Authenticator($this);
@@ -62,20 +66,43 @@ class CoreClient
     /**
      * Validate the current package state.
      */
-    private function setBaseUrl()
+    private function setBaseUrl(): void
     {
         $apiRoot = $this->config->get('mpesa.api_url', '');
-        if (substr($apiRoot, strlen($apiRoot) - 1) !== '/') {
+        if (!str_ends_with($apiRoot, '/')) {
             $apiRoot = $apiRoot . '/';
         }
         $this->baseUrl = $apiRoot;
     }
     
-    public function setValidationRules($rules)
+    /**
+     * @throws \ReflectionException
+     */
+    public function setValidationRules($rules): void
     {
         $this->validationRules = $rules;
-        foreach ($this->validationRules as $key => $value) {
-            $this->validator->add($key, $value);
+        foreach ($this->validationRules as $param => $rule) {
+            $this->validator->add($param, $rule);
+        }
+    }
+    
+    /**
+     * @throws \Ssiva\MpesaDaraja\Exceptions\ConfigurationException
+     */
+    private function validateRequestBodyParams($params): void
+    {
+        if (!$this->validator->validate($params)) {
+            $errors = $this->validator->getMessages();
+            $labeledErrors = $this->validator->getLabeledMessages();
+            $finalErrors = [];
+            foreach($errors as $errKey => $err){
+                foreach($err as $key => $er){
+                    $finalErrors[] = $labeledErrors[$errKey][$key];
+                    // $finalErrors['labeled'][] = $labeledErrors[$errKey][$key];
+                    // $finalErrors['plain'][] = $er;
+                }
+            }
+            $this->throwConfigException(\json_encode($finalErrors));
         }
     }
     
@@ -85,6 +112,19 @@ class CoreClient
      */
     public function makeRequest($uri, $method, $options = []): ResponseInterface
     {
+        if($method === 'GET'){
+            $consumerKey = configStore()->get("mpesa.apps.{$options['app']}.consumer_key");
+            $consumerSecret = configStore()->get("mpesa.apps.{$options['app']}.consumer_secret");
+            $options['json'] = [
+                'consumer_key' => $consumerKey,
+                'consumer_secret' => $consumerSecret,
+            ];
+        }
+        
+        if (!empty($this->validationRules) && isset($options['json'])) {
+            $this->validateRequestBodyParams($options['json']);
+        }
+        
         try {
             switch ($method){
                 case 'POST':
@@ -96,5 +136,12 @@ class CoreClient
         catch (ClientException|ServerException $exception) {
             return (new MpesaGuzzleException())->generateException($exception);
         }
+    }
+    
+    /**
+     * @throws \Ssiva\MpesaDaraja\Exceptions\ConfigurationException
+     */
+    public function throwConfigException($reason){
+        throw new ConfigurationException($reason,422);
     }
 }
