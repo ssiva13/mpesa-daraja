@@ -37,6 +37,8 @@ abstract class AbstractDarajaQuery implements DarajaQueryInterface
     /**
      * @inheritDoc
      */
-    abstract public function submitRequest(array $params = [], string $app = 'default');
-    
+    public function submitRequest(array $params = [], string $app = 'default')
+    {
+        // TODO: Implement submit() method.
+    }
 }
