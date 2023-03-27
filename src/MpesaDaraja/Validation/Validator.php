@@ -22,7 +22,10 @@ class Validator implements ValidatorInterface
     protected RuleFactory $ruleFactory;
     private bool $validated = false;
     
-    protected array $dataWrapper;
+    /**
+     * @var $dataWrapper ArrayWrapper
+     */
+    protected $dataWrapper;
     
     public function __construct()
     {
