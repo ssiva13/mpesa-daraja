@@ -6,6 +6,8 @@
  */
 return [
     'api_url' => getenv('MPESA_URL', 'https://sandbox.safaricom.co.ke'),
+    'max_txn' => getenv('MPESA_MAX_TXN', 125000),
+    'min_txn' => getenv('MPESA_MIN_TXN', 100),
     'apps' => [
         'default' => [
             'consumer_key' => getenv('MPESA_KEY', ''),
