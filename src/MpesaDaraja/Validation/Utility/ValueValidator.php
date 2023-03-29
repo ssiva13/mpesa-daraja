@@ -43,12 +43,12 @@ class ValueValidator
     /**
      * @throws \ReflectionException
      */
-    public function addRules($param, $rules): void
+    public function addRules($param, $rules, $options = []): void
     {
         $rules = explode('|', $rules);
         foreach ($rules as $rule) {
             $ruleKey = "$rule|$param";
-            $validator = $this->ruleFactory->createRule($ruleKey);
+            $validator = $this->ruleFactory->createRule($ruleKey, $options);
             $this->addRule($validator);
         }
     }

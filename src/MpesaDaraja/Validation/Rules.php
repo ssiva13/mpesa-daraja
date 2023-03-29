@@ -21,21 +21,32 @@ enum Rules
     case LT;
     case LTE;
     case EQUAL;
-    
+    case EXISTS_IN;
+    case PHONE;
+    case MAX;
+    case MIN;
+    case URL;
+
     public function rule(): string
     {
         return match ($this) {
-            self::REQUIRED => 'required',
-            self::REQUIRED_IF => 'required_if:?',
             self::STRING => 'alpha_numeric',
-            self::NUMERIC => 'integer',
             self::DATE => 'date',
-            self::DATETIME => 'datetime',
+            self::DATETIME => 'date_time',
+            self::EXISTS_IN => 'exists',
+            self::GTE => 'GreaterThanEqual',
+            self::NUMERIC => 'integer',
+            self::LTE => 'LessThanEqual',
+            self::MAX => 'max',
+            self::MIN => 'min',
+            self::PHONE => 'phone',
+            self::REQUIRED => 'required',
+            self::URL => 'url',
+    
+            self::REQUIRED_IF => 'required_if:?',
             self::TIME => 'time',
             self::GT => 'gt',
-            self::GTE => 'gte',
             self::LT => 'lt',
-            self::LTE => 'lte',
             self::EQUAL => 'eq',
         };
     }

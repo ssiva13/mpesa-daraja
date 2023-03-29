@@ -23,6 +23,7 @@ class RuleFactory
         if ($label = $this->getRuleName($ruleName, false)) {
             /** @var AbstractRule $validator */
             $validator->setLabeledMessage($label);
+            $validator->setOptions($options);
         }
         return $validator;
     }
@@ -67,8 +68,6 @@ class RuleFactory
 
     protected function getMessageTemplate($name)
     {
-
-        dd($name);
         $noLabelMessage = is_string($name) && isset($this->errorMessages[$name]) ? $this->errorMessages[$name] : null;
 
         return $noLabelMessage;
