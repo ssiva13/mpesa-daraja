@@ -64,4 +64,13 @@ abstract class AbstractRule
         return $this;
     }
     
+    public function setOptions($options)
+    {
+        foreach ($options as $name => $value) {
+            $this->options[$name] = $value;
+        }
+        return $this;
+    }
+
+
 }
