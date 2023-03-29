@@ -25,11 +25,11 @@ class CoreClient
     public string $baseUrl;
     public array $validationRules;
     public Client $httpClient;
-    
+
     public Validator $validator;
     public Authenticator $auth;
-    
-    
+
+
     public function __construct(ConfigurationStore $configStore, $cacheStore)
     {
         $this->config = $configStore;
@@ -39,9 +39,9 @@ class CoreClient
         $this->setAuthenticator();
         $this->httpClient = $this->setCoreClient();
         // $this->auth = $auth;
-        
+
     }
-    
+
     /**
      * Set authenticator to be used to get token
      *
@@ -51,7 +51,7 @@ class CoreClient
     public function setAuthenticator(){
         $this->auth = new Authenticator($this);
     }
-    
+
     public function setCoreClient(): Client
     {
         return new Client([
@@ -62,7 +62,7 @@ class CoreClient
             ],
         ]);
     }
-    
+
     /**
      * Validate the current package state.
      */
@@ -74,7 +74,7 @@ class CoreClient
         }
         $this->baseUrl = $apiRoot;
     }
-    
+
     /**
      * @throws \ReflectionException
      */
@@ -85,7 +85,7 @@ class CoreClient
             $this->validator->add($param, $rule);
         }
     }
-    
+
     /**
      * @throws \Ssiva\MpesaDaraja\Exceptions\ConfigurationException
      */
@@ -105,26 +105,17 @@ class CoreClient
             $this->throwConfigException(\json_encode($finalErrors));
         }
     }
-    
+
     /**
      * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws \Exception
      */
     public function makeRequest($uri, $method, $options = []): ResponseInterface
     {
-        if($method === 'GET'){
-            $consumerKey = configStore()->get("mpesa.apps.{$options['app']}.consumer_key");
-            $consumerSecret = configStore()->get("mpesa.apps.{$options['app']}.consumer_secret");
-            $options['json'] = [
-                'consumer_key' => $consumerKey,
-                'consumer_secret' => $consumerSecret,
-            ];
-        }
-        
         if (!empty($this->validationRules) && isset($options['json'])) {
             $this->validateRequestBodyParams($options['json']);
         }
-        
+
         try {
             switch ($method){
                 case 'POST':
@@ -137,7 +128,7 @@ class CoreClient
             return (new MpesaGuzzleException())->generateException($exception);
         }
     }
-    
+
     /**
      * @throws \Ssiva\MpesaDaraja\Exceptions\ConfigurationException
      */

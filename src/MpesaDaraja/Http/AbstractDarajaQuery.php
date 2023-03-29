@@ -12,7 +12,7 @@ abstract class AbstractDarajaQuery implements DarajaQueryInterface
     protected string $endpoint = '';
     protected CoreClient $coreClient;
     protected array $validationRules = [];
-    
+
     /**
      * Auth constructor.
      *
@@ -25,7 +25,7 @@ abstract class AbstractDarajaQuery implements DarajaQueryInterface
         $this->coreClient = $coreClient;
         $this->coreClient->setValidationRules($this->validationRules);
     }
-    
+
     /**
      * @inheritDoc
      */
@@ -33,7 +33,7 @@ abstract class AbstractDarajaQuery implements DarajaQueryInterface
     {
         return $this->coreClient->auth->authenticate($app);
     }
-    
+
     /**
      * @inheritDoc
      */
