@@ -132,4 +132,23 @@ if (! function_exists('computeSecurityCredential')) {
         return base64_encode($encrypted);
     }
 }
+if (! function_exists('getConfigParams')) {
+    function getConfigParams($type): array
+    {
+        $shortCode = configStore()->get("mpesa.account.short_code");
+        $resultCallback = configStore()->get("mpesa.account.result_url");
+        $timeoutCallback = configStore()->get("mpesa.account.timeout_url");
+        $initiator = configStore()->get("mpesa.account.initiator_name");
+        $commandId = configStore()->get("mpesa.account.$type.default_command_id");
+        $initiatorPass = configStore()->get("mpesa.account.security_credential");
+        $securityCert = configStore()->get("mpesa.account.security_cert");
+        $identifierType = configStore()->get("mpesa.account.identifier_type");
+        
+        return [
+            $shortCode, $resultCallback, $timeoutCallback,
+            $initiator, $commandId, $initiatorPass,
+            $securityCert, $identifierType
+        ];
+    }
+}
 
