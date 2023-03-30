@@ -18,6 +18,8 @@ use Ssiva\MpesaDaraja\Http\C2B\RegisterUrls as RegisterC2BUrls;
 use Ssiva\MpesaDaraja\Http\CoreClient;
 use Ssiva\MpesaDaraja\Http\MpesaOnline\STKPush;
 use Ssiva\MpesaDaraja\Http\MpesaOnline\STKStatusQuery;
+use GuzzleHttp\Exception\GuzzleException as GuzzleExceptionAlias;
+use Ssiva\MpesaDaraja\Exceptions\ConfigurationException as ConfigurationExceptionAlias;
 
 trait MpesaTrait
 {
@@ -29,8 +31,8 @@ trait MpesaTrait
      * @param string $app
      *
      * @return string|null
-     * @throws \GuzzleHttp\Exception\GuzzleException
-     * @throws \Ssiva\MpesaDaraja\Exceptions\ConfigurationException
+     * @throws GuzzleExceptionAlias
+     * @throws ConfigurationExceptionAlias|\ReflectionException
      */
     public function authenticate(array $params = [], string $app = 'default'): ?string
     {
@@ -43,10 +45,10 @@ trait MpesaTrait
      * @param string $app
      *
      * @return mixed
-     * @throws \GuzzleHttp\Exception\GuzzleException
-     * @throws \Ssiva\MpesaDaraja\Exceptions\ConfigurationException
+     * @throws GuzzleExceptionAlias
+     * @throws ConfigurationExceptionAlias|\ReflectionException
      */
-    public function stkPush(array $params = [], string $app = 'default')
+    public function stkPush(array $params = [], string $app = 'default'): mixed
     {
         $stk = new STKPush($this->coreClient);
         return $stk->submitRequest($params);
@@ -57,18 +59,18 @@ trait MpesaTrait
      * @param string $app
      *
      * @return mixed
-     * @throws \GuzzleHttp\Exception\GuzzleException
-     * @throws \Ssiva\MpesaDaraja\Exceptions\ConfigurationException
+     * @throws GuzzleExceptionAlias
+     * @throws ConfigurationExceptionAlias|\ReflectionException
      */
-    public function stkPushQuery(array $params = [], string $app = 'default')
+    public function stkPushQuery(array $params = [], string $app = 'default'): mixed
     {
         $stk = new STKStatusQuery($this->coreClient);
         return $stk->submitRequest($params);
     }
     
     /**
-     * @throws \GuzzleHttp\Exception\GuzzleException
-     * @throws \Ssiva\MpesaDaraja\Exceptions\ConfigurationException
+     * @throws GuzzleExceptionAlias
+     * @throws ConfigurationExceptionAlias|\ReflectionException
      */
     public function accountBalance(array $params = [], string $app = 'default')
     {
@@ -77,8 +79,8 @@ trait MpesaTrait
     }
     
     /**
-     * @throws \GuzzleHttp\Exception\GuzzleException
-     * @throws \Ssiva\MpesaDaraja\Exceptions\ConfigurationException
+     * @throws GuzzleExceptionAlias
+     * @throws ConfigurationExceptionAlias|\ReflectionException
      */
     public function reversal(array $params = [], string $app = 'default')
     {
@@ -87,8 +89,8 @@ trait MpesaTrait
     }
     
     /**
-     * @throws \GuzzleHttp\Exception\GuzzleException
-     * @throws \Ssiva\MpesaDaraja\Exceptions\ConfigurationException
+     * @throws GuzzleExceptionAlias
+     * @throws ConfigurationExceptionAlias|\ReflectionException
      */
     public function transactionStatus(array $params = [], string $app = 'default')
     {
@@ -97,8 +99,8 @@ trait MpesaTrait
     }
     
     /**
-     * @throws \GuzzleHttp\Exception\GuzzleException
-     * @throws \Ssiva\MpesaDaraja\Exceptions\ConfigurationException
+     * @throws GuzzleExceptionAlias
+     * @throws ConfigurationExceptionAlias|\ReflectionException
      */
     public function b2cPayment(array $params = [], string $app = 'default')
     {
@@ -107,9 +109,9 @@ trait MpesaTrait
     }
     
      /**
-     * @throws \GuzzleHttp\Exception\GuzzleException
-     * @throws \Ssiva\MpesaDaraja\Exceptions\ConfigurationException
-     */
+     * @throws GuzzleExceptionAlias
+     * @throws ConfigurationExceptionAlias|\ReflectionException
+      */
     public function b2bPayment(array $params = [], string $app = 'default')
     {
         $mpesa = new PayB2B($this->coreClient);
@@ -117,8 +119,8 @@ trait MpesaTrait
     }
 
     /**
-     * @throws \GuzzleHttp\Exception\GuzzleException
-     * @throws \Ssiva\MpesaDaraja\Exceptions\ConfigurationException
+     * @throws GuzzleExceptionAlias
+     * @throws ConfigurationExceptionAlias|\ReflectionException
      */
     public function c2bPayment(array $params = [], string $app = 'default')
     {
@@ -127,8 +129,8 @@ trait MpesaTrait
     }
 
     /**
-     * @throws \GuzzleHttp\Exception\GuzzleException
-     * @throws \Ssiva\MpesaDaraja\Exceptions\ConfigurationException
+     * @throws GuzzleExceptionAlias
+     * @throws ConfigurationExceptionAlias|\ReflectionException
      */
     public function registerC2BUrls(array $params = [], string $app = 'default')
     {

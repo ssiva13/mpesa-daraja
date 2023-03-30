@@ -13,6 +13,21 @@ class TransactionStatus extends AbstractDarajaQuery
 {
     protected string $endpoint = 'mpesa/transactionstatus/v1/query';
     
+    protected array $validationRules = [
+        'QueueTimeOutURL' => 'required|url',
+        'ResultURL' => 'required|url',
+        'CommandID' => 'required|string|max:64|exists_in:CommandID_transactionstatus',
+        'SecurityCredential' => 'required|string',
+        'Initiator' => 'required|string',
+        'initiatorPass' => 'required',
+        'securityCert' => 'required',
+        'IdentifierType' => 'required|numeric|exists_in:IdentifierType_transactionstatus',
+        'PartyA' => 'required|numeric|min:5',
+        'Remarks' => 'required|string|max:20',
+        'TransactionID' => 'required|string',
+        'Occasion' => 'required|string|max:20',
+    ];
+    
     /*
      * Query the Transaction Status of an M-Pesa Transaction
      */
@@ -20,15 +35,10 @@ class TransactionStatus extends AbstractDarajaQuery
     {
         // Make sure all the indexes are in Uppercases as shown in docs
         $userParams = formatParams($params);
-        
-        $shortCode = configStore()->get('mpesa.account.short_code');
-        $resultCallback  = configStore()->get('mpesa.account.result_url');
-        $timeoutCallback  = configStore()->get('mpesa.account.timeout_url');
-        $initiator  = configStore()->get('mpesa.account.initiator_name');
-        $commandId  = configStore()->get('mpesa.account.transaction.default_command_id');
-        $initiatorPass = configStore()->get('mpesa.account.security_credential');
-        $securityCert = configStore()->get('mpesa.account.security_cert');
-        $identifierType = configStore()->get('mpesa.account.identifier_type');
+        [
+            $shortCode, $resultCallback, $timeoutCallback, $initiator, $commandId, $initiatorPass, $securityCert,
+            $identifierType
+        ] = getConfigParams('transaction');
         
         $configParams = [
             'Initiator' => $initiator,
@@ -38,6 +48,8 @@ class TransactionStatus extends AbstractDarajaQuery
             'PartyA' => $shortCode,
             'QueueTimeOutURL' => $timeoutCallback,
             'ResultURL' => $resultCallback,
+            'initiatorPass' => $initiatorPass,
+            'securityCert' => $securityCert,
         ];
         
         // This gives precedence to params coming from user allowing them to override config params
