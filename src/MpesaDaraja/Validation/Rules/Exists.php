@@ -17,6 +17,24 @@ class Exists extends AbstractRule
             'CustomerPayBillOnline',
             'CustomerBuyGoodsOnline'
         ],
+        'CommandID_accountbalance' => [
+            'AccountBalance',
+        ],
+        'CommandID_reversal' => [
+            'TransactionReversal',
+        ],
+        'CommandID_transactionstatus' => [
+            'TransactionStatusQuery',
+        ],
+        'IdentifierType_accountbalance' => [
+            2, 4, 1
+        ],
+        'IdentifierType_transactionstatus' => [
+            2, 4, 1
+        ],
+       'RecieverIdentifierType_accountbalance' => [
+            2, 4
+        ],
 
     ];
 
