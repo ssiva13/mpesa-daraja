@@ -20,14 +20,14 @@ class STKPush extends AbstractDarajaQuery
         'Amount' => 'required|numeric|lte:max_txn|gte:min_txn',
         'PartyA' => 'required|numeric|phone',
         'PhoneNumber' => 'required|numeric|phone',
-        'PartyB' => 'required|numeric',
+        'PartyB' => 'required|numeric|min:6',
         'AccountReference' => 'required|string|max:12',
         'TransactionDesc' => 'string|max:13|min:1',
         'CallBackURL' => 'required|url',
         'Password' => 'required|string',
         'PassKey' => 'required|string',
         'Timestamp' => 'required|datetime',
-        'BusinessShortCode' => 'required|numeric',
+        'BusinessShortCode' => 'required|numeric|min:5',
     ];
 
     /**
