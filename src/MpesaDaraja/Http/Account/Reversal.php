@@ -13,6 +13,22 @@ class Reversal extends AbstractDarajaQuery
 {
     protected string $endpoint = 'mpesa/reversal/v1/request';
     
+    protected array $validationRules = [
+        'ReceiverParty' => 'required|numeric|min:5',
+        'QueueTimeOutURL' => 'required|url',
+        'ResultURL' => 'required|url',
+        'Remarks' => 'required|string|max:20',
+        'Occasion' => 'required|string|max:20',
+        'CommandID' => 'required|string|max:64|exists_in:CommandID_reversal',
+        'SecurityCredential' => 'required|string',
+        'Initiator' => 'required|string',
+        'TransactionID' => 'required|string',
+        'Amount' => 'required|numeric|lte:max_txn|gte:min_txn',
+        'RecieverIdentifierType' => 'required|numeric|exists_in:RecieverIdentifierType_accountbalance',
+        'initiatorPass' => 'required',
+        'securityCert' => 'required',
+    ];
+    
     /*
      * Reverse an M-Pesa Transaction
      */
@@ -21,14 +37,10 @@ class Reversal extends AbstractDarajaQuery
         // Make sure all the indexes are in Uppercases as shown in docs
         $userParams = formatParams($params);
         
-        $shortCode = configStore()->get('mpesa.account.short_code');
-        $resultCallback  = configStore()->get('mpesa.account.result_url');
-        $timeoutCallback  = configStore()->get('mpesa.account.timeout_url');
-        $initiator  = configStore()->get('mpesa.account.initiator_name');
-        $commandId  = configStore()->get('mpesa.account.reversal.default_command_id');
-        $initiatorPass = configStore()->get('mpesa.account.security_credential');
-        $securityCert = configStore()->get('mpesa.account.security_cert');
-        $identifierType = configStore()->get('mpesa.account.identifier_type');
+        [
+            $shortCode, $resultCallback, $timeoutCallback, $initiator, $commandId, $initiatorPass, $securityCert,
+            $identifierType
+        ] = getConfigParams('reversal');
         
         $configParams = [
             'Initiator' => $initiator,
@@ -40,6 +52,8 @@ class Reversal extends AbstractDarajaQuery
             // 'PartyA' => $shortCode,
             'QueueTimeOutURL' => $timeoutCallback,
             'ResultURL' => $resultCallback,
+            'initiatorPass' => $initiatorPass,
+            'securityCert' => $securityCert,
         ];
         
         // This gives precedence to params coming from user allowing them to override config params

@@ -15,7 +15,15 @@ use Ssiva\MpesaDaraja\Http\CoreClient;
 class STKStatusQuery extends AbstractDarajaQuery
 {
     protected string $endpoint = 'mpesa/stkpushquery/v1/query';
-    
+
+    protected array $validationRules = [
+        'Password' => 'required|string',
+        'PassKey' => 'required|string',
+        'Timestamp' => 'required|datetime',
+        'BusinessShortCode' => 'required|numeric|min:5',
+        'CheckoutRequestID' => 'required',
+    ];
+
     /**
      * @param array $params
      * @param string $app
@@ -29,7 +37,7 @@ class STKStatusQuery extends AbstractDarajaQuery
     {
         // Make sure all the indexes are in Uppercases as shown in docs
         $userParams = formatParams($params);
-        
+
         $time = now('YmdHis');
         $shortCode = configStore()->get('mpesa.mpesa_online.short_code');
         $passkey = configStore()->get('mpesa.mpesa_online.passkey');
@@ -39,10 +47,11 @@ class STKStatusQuery extends AbstractDarajaQuery
             'BusinessShortCode' => $shortCode,
             'Password' => $password,
             'Timestamp' => $time,
+            'PassKey' => $passkey,
         ];
         // This gives precedence to params coming from user allowing them to override config params
         $body = array_merge($configParams, $userParams);
-        
+
         $token = $this->bearer($app);
         $response = $this->coreClient->makeRequest(
             $this->endpoint,
@@ -56,7 +65,6 @@ class STKStatusQuery extends AbstractDarajaQuery
         );
         $contents = $response->getBody()->getContents();
         return json_decode($contents);
-        
     }
-    
+
 }

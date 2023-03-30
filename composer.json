@@ -4,11 +4,12 @@
     "keywords": ["mpesa", "safaricom", "daraja", "api"],
     "type": "library",
     "require": {
-        "php": ">=7.4",
+        "php": ">=8.1",
         "guzzlehttp/guzzle": "^7.5",
         "nesbot/carbon": "^2.66",
         "ext-json": "*",
-        "ext-openssl": "*"
+        "ext-openssl": "*",
+        "ext-ctype": "*"
     },
     "license": "MIT",
     "autoload": {

@@ -18,6 +18,7 @@ class Authenticator extends AbstractDarajaQuery
     protected string $endpoint = 'oauth/v1/generate';
     protected ?string $token = null;
     
+    
     /**
      * @throws \Ssiva\MpesaDaraja\Exceptions\ConfigurationException
      * @throws \GuzzleHttp\Exception\GuzzleException
@@ -28,9 +29,9 @@ class Authenticator extends AbstractDarajaQuery
         if ($this->getCachedToken($app)) {
             return $this->token;
         }
-        
+
         $credentials = $this->generateCredentials($app);
-        
+
         $response = $this->coreClient->makeRequest(
             $this->endpoint,
             'GET',
@@ -40,10 +41,11 @@ class Authenticator extends AbstractDarajaQuery
                 ],
                 'headers' => [
                     'Authorization' => 'Basic ' . $credentials
-                ]
+                ],
+                'app' => $app
             ]
         );
-        
+
         $contents = json_decode($response->getBody()->getContents());
         $this->storeAuthCredentials($contents, $app);
 
@@ -52,9 +54,9 @@ class Authenticator extends AbstractDarajaQuery
         }
         $this->token = $contents->access_token;
         return $this->token;
-    
+
     }
-    
+
     /**
      * @param string $app
      *
@@ -70,13 +72,13 @@ class Authenticator extends AbstractDarajaQuery
         }
         $consumerKey = configStore()->get("mpesa.apps.$app.consumer_key");
         $consumerSecret = configStore()->get("mpesa.apps.$app.consumer_secret");
-    
+
         if (!$consumerKey || !$consumerSecret) {
             throw new ConfigurationException("You have not set either consumer key or consumer secret for $app mpesa app");
         }
         return base64_encode($consumerKey . ':' . $consumerSecret);
     }
-    
+
     /**
      * @param string $app
      * @param $contents
@@ -89,7 +91,7 @@ class Authenticator extends AbstractDarajaQuery
         // $this->coreClient->cache->put("{$app}_mpesa_access_token", $contents->access_token, $expiry);
         cacheStore()->put("{$app}_mpesa_access_token", $contents->access_token, $expiry);
     }
-    
+
     public function getCachedToken($app): bool
     {
         // $token = $this->coreClient->cache->get("{$app}_mpesa_access_token");
@@ -97,5 +99,5 @@ class Authenticator extends AbstractDarajaQuery
         $this->token = $token;
         return (bool) $token;
     }
-    
+
 }
