@@ -39,9 +39,9 @@ The project is compatible with the composer dependency management tool.
 ## Contributors
 I express my appreciation to the Ninjas who assisted me throughout the integration process and taught me valuable lessons or provided useful code during the journey.
 
-|                                                                                                                                             |                                                                                                                                                   |
-|---------------------------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------|
-| [<img src="https://avatars.githubusercontent.com/u/20058478?v=4" width="100px;"/><br/><sub>Simon Siva</sub>](mailto::simonsiva13@gmail.com) | [<img src="https://avatars.githubusercontent.com/u/37109790?v=4" width="100px;"/><br/><sub>Kelvin Mukotso</sub>](mailto::kelvinmukotso@gmail.com) |
+|                                                                                                                                          |                                                                                                                                              |
+|------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------|
+| [<img src="https://avatars.githubusercontent.com/u/20058478?v=4" width="100px;"/><br/><sub>Simon Siva</sub>](https://github.com/ssiva13) | [<img src="https://avatars.githubusercontent.com/u/37109790?v=4" width="100px;"/><br/><sub>Kelvin Mukotso</sub>](https://github.com/mukotso) |
 
  
 
