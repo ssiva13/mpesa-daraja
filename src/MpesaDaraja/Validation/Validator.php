@@ -44,6 +44,9 @@ class Validator implements ValidatorInterface
             if(str_contains($rule, ':')){
                 $rule = strtok($rule, ':');
                 $option = strtok( '' );
+                if($rule === 'required_if'){
+                    $options[$option] = $option;
+                }
                 $options[$rule] = $option;
             }
             $this->ensureSelectorRulesExist($param);
@@ -65,14 +68,14 @@ class Validator implements ValidatorInterface
     }
 
     /**
-     * @param array $rules
+     * @param array $params
      *
      * @return bool
      */
-    public function validate(array $rules = []): bool
+    public function validate(array $params = []): bool
     {
-        if ($rules) {
-            $this->setData($rules);
+        if ($params) {
+            $this->setData($params);
         }
         // data was already validated, return the results immediately
         if ($this->validated === true) {

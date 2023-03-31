@@ -35,6 +35,28 @@ class Exists extends AbstractRule
        'RecieverIdentifierType_accountbalance' => [
             2, 4
         ],
+        'CommandID_b2b' => [
+            'BusinessPayBill',
+        ],
+        'CommandID_b2c' => [
+            'SalaryPayment',
+            'BusinessPayment',
+            'PromotionPayment',
+        ],
+        'SenderIdentifierType_b2b' => [
+            2, 4
+        ],
+        'RecieverIdentifierType_b2b' => [
+            2, 4
+        ],
+        'ResponseType_c2b' => [
+            'Canceled',
+            'Completed',
+        ],
+        'CommandID_c2b' => [
+            'CustomerPayBillOnline',
+            'CustomerBuyGoodsOnline',
+        ],
 
     ];
 
