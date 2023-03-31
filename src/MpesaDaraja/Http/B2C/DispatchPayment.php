@@ -19,7 +19,7 @@ class DispatchPayment extends AbstractDarajaQuery
         'QueueTimeOutURL' => 'required|url',
         'ResultURL' => 'required|url',
         'Remarks' => 'required|string|max:100',
-        'CommandID' => 'required|string|max:15|exists_in:CommandID_b2c',
+        'CommandID' => 'required|string|max:30|exists_in:CommandID_b2c',
         'SecurityCredential' => 'required|string',
         'InitiatorName' => 'required|string',
         'Occasion' => 'string',

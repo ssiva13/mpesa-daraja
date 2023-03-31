@@ -17,10 +17,10 @@ class ProcessCustomerPayment extends AbstractDarajaQuery
 
     protected array $validationRules = [
         'ShortCode' => 'required|numeric|min:5',
-        'CommandID' => 'required|string|max:15|exists_in:CommandID_c2b',
+        'CommandID' => 'required|string|max:30|exists_in:CommandID_c2b',
         'Msisdn' => 'required|numeric|phone',
         'Amount' => 'required|numeric|lte:max_txn|gte:min_txn',
-        'BillRefNumber' => 'required_if:CommandID_c2b|string|phone',
+        'BillRefNumber' => 'required_if:CommandID_c2b',
     ];
     
     /*

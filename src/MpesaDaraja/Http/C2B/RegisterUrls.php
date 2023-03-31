@@ -18,7 +18,7 @@ class RegisterUrls extends AbstractDarajaQuery
         'ConfirmationURL' => 'required|url',
         'ValidationURL' => 'required|url',
         'ShortCode' => 'required|numeric|min:5',
-        'ResponseType' => 'required|string|max:15|exists_in:ResponseType_c2b',
+        'ResponseType' => 'required|string|max:30|exists_in:ResponseType_c2b',
     ];
     
     /*
