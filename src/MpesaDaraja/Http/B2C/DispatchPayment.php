@@ -13,6 +13,21 @@ class DispatchPayment extends AbstractDarajaQuery
 {
     protected string $endpoint = 'mpesa/b2c/v1/paymentrequest';
     
+    protected array $validationRules = [
+        'PartyA' => 'required|numeric|min:5',
+        'PartyB' => 'required|numeric|phone',
+        'QueueTimeOutURL' => 'required|url',
+        'ResultURL' => 'required|url',
+        'Remarks' => 'required|string|max:100',
+        'CommandID' => 'required|string|max:15|exists_in:CommandID_b2c',
+        'SecurityCredential' => 'required|string',
+        'InitiatorName' => 'required|string',
+        'Occasion' => 'string',
+        'initiatorPass' => 'required',
+        'securityCert' => 'required',
+        'Amount' => 'required|numeric|lte:max_txn|gte:min_txn',
+    ];
+    
     /*
      * Make a B2C Payment Request
      */
@@ -37,6 +52,8 @@ class DispatchPayment extends AbstractDarajaQuery
             'PartyA' => $shortCode,
             'QueueTimeOutURL' => $timeoutCallback,
             'ResultURL' => $resultCallback,
+            'initiatorPass' => $initiatorPass,
+            'securityCert' => $securityCert,
         ];
         
         // This gives precedence to params coming from user allowing them to override config params
