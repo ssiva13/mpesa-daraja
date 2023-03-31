@@ -16,7 +16,7 @@ class Max extends AbstractRule
      */
     public function validate($value, $valueIdentifier = null)
     {
-        $this->value   = $value;
+        $this->value = $value;
         $this->updateLabeledMessage();
         $maxLength = (int) $this->options['max'];
         $this->success = strlen($value) <= $maxLength;

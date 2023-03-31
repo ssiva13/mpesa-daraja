@@ -20,6 +20,8 @@ class Date extends AbstractRule
      */
     public function validate($value, $valueIdentifier = null)
     {
+        $this->value = $value;
+        
         $parsedValue = Carbon::createFromFormat('Ymd', $value)->format('Ymd');
         $this->success = $parsedValue === $value;
         return $this->success;

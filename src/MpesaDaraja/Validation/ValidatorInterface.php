@@ -13,5 +13,5 @@ interface ValidatorInterface
 
     public function remove($param, $rules = true);
 
-    public function validate(array $rules = []);
+    public function validate(array $params = []);
 }

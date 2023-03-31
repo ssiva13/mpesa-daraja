@@ -15,7 +15,7 @@ class Integer extends AbstractRule
      */
     public function validate($value, $valueIdentifier = null)
     {
-        $this->value   = $value;
+        $this->value = $value;
         $this->success = ctype_digit((string) str_replace(' ', '', $value));
         return $this->success;
     }

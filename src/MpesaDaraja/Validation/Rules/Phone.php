@@ -15,7 +15,7 @@ class Phone extends AbstractRule
      */
     public function validate($value, $valueIdentifier = null)
     {
-        $this->value   = $value;
+        $this->value = $value;
         $this->success = preg_match('/^(254)[1-9]\d{8}$/', $value);
         return $this->success;
     }

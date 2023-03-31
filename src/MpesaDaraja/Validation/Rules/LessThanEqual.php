@@ -16,7 +16,7 @@ class LessThanEqual extends AbstractRule
      */
     public function validate($value, $valueIdentifier = null)
     {
-        $this->value   = $value;
+        $this->value = $value;
         $maxValueConfig = $this->options['lte'];
 
         $maxValue = configStore()->get("mpesa.$maxValueConfig");

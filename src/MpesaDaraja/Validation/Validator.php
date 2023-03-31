@@ -65,14 +65,14 @@ class Validator implements ValidatorInterface
     }
 
     /**
-     * @param array $rules
+     * @param array $params
      *
      * @return bool
      */
-    public function validate(array $rules = []): bool
+    public function validate(array $params = []): bool
     {
-        if ($rules) {
-            $this->setData($rules);
+        if ($params) {
+            $this->setData($params);
         }
         // data was already validated, return the results immediately
         if ($this->validated === true) {

@@ -13,6 +13,14 @@ use Ssiva\MpesaDaraja\Http\AbstractDarajaQuery;
 class RegisterUrls extends AbstractDarajaQuery
 {
     protected string $endpoint = 'mpesa/c2b/v1/registerurl';
+    
+    protected array $validationRules = [
+        'ConfirmationURL' => 'required|url',
+        'ValidationURL' => 'required|url',
+        'ShortCode' => 'required|numeric|min:5',
+        'ResponseType' => 'required|string|max:30|exists_in:ResponseType_c2b',
+    ];
+    
     /*
     * Register Validation and confirmation Urls for
     */

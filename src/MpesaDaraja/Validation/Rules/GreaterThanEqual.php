@@ -16,7 +16,7 @@ class GreaterThanEqual extends AbstractRule
      */
     public function validate($value, $valueIdentifier = null)
     {
-        $this->value   = $value;
+        $this->value = $value;
         $minValueConfig = $this->options['gte'];
         $minValue = configStore()->get("mpesa.$minValueConfig");
         $this->updateLabeledMessage($minValue);

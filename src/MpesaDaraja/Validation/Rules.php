@@ -15,12 +15,8 @@ enum Rules
     case NUMERIC;
     case DATE;
     case DATETIME;
-    case TIME;
-    case GT;
     case GTE;
-    case LT;
     case LTE;
-    case EQUAL;
     case EXISTS_IN;
     case PHONE;
     case MAX;
@@ -34,20 +30,15 @@ enum Rules
             self::DATE => 'date',
             self::DATETIME => 'date_time',
             self::EXISTS_IN => 'exists',
-            self::GTE => 'GreaterThanEqual',
+            self::GTE => 'greater_than_equal',
             self::NUMERIC => 'integer',
-            self::LTE => 'LessThanEqual',
+            self::LTE => 'less_than_equal',
             self::MAX => 'max',
             self::MIN => 'min',
             self::PHONE => 'phone',
             self::REQUIRED => 'required',
             self::URL => 'url',
-    
-            self::REQUIRED_IF => 'required_if:?',
-            self::TIME => 'time',
-            self::GT => 'gt',
-            self::LT => 'lt',
-            self::EQUAL => 'eq',
+            self::REQUIRED_IF => 'required_if',
         };
     }
 }
