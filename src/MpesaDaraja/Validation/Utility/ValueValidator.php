@@ -10,6 +10,7 @@ namespace Ssiva\MpesaDaraja\Validation\Utility;
 use Ssiva\MpesaDaraja\Validation\RuleFactory;
 use Ssiva\MpesaDaraja\Validation\Rules\AbstractRule;
 use Ssiva\MpesaDaraja\Validation\Rules\Required;
+use Ssiva\MpesaDaraja\Validation\Rules\RequiredIf;
 
 class ValueValidator
 {
@@ -65,6 +66,15 @@ class ValueValidator
         foreach ($this->rules as $rule) {
             if ($rule instanceof Required) {
                 $isRequired = true;
+                break;
+            }
+            if ($rule instanceof RequiredIf) {
+                $options = $rule->getOptions();
+                $conditionalIdentifier = strtok($options['required_if'], '_');
+                $conditionalValue = $context->getItemValue($conditionalIdentifier);
+                if($conditionalValue){
+                    $isRequired = true;
+                }
                 break;
             }
         }
