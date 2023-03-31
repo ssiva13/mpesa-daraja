@@ -7,6 +7,7 @@
         "php": ">=8.1",
         "guzzlehttp/guzzle": "^7.5",
         "nesbot/carbon": "^2.66",
+        "illuminate/support": "^10.5",
         "ext-json": "*",
         "ext-openssl": "*",
         "ext-ctype": "*"
@@ -20,10 +21,24 @@
             "src/MpesaDaraja/Helpers/helpers.php"
         ]
     },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Ssiva\\MpesaDaraja\\MpesaServiceProvider"
+            ],
+            "aliases": {
+                "MPESA": "Ssiva\\MpesaDaraja\\Facades\\MpesaFacade"
+            }
+        }
+    },
     "authors": [
         {
             "name": "Simon Siva",
             "email": "simonsiva13@gmail.com"
+        },
+        {
+            "name": "Kelvin Mukotso",
+            "email": "kelvinmukotso@gmail.com"
         }
     ],
     "minimum-stability": "stable"
