@@ -20,6 +20,8 @@ class DateTime extends AbstractRule
      */
     public function validate($value, $valueIdentifier = null)
     {
+        $this->value = $value;
+        
         $parsedValue = Carbon::createFromFormat('YmdHis', $value)->format('YmdHis');
         $this->success = $parsedValue === $value;
         return $this->success;

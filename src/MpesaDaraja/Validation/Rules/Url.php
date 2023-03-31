@@ -16,7 +16,7 @@ class Url extends AbstractRule
      */
     public function validate($value, $valueIdentifier = null)
     {
-        $this->value   = $value;
+        $this->value = $value;
         $this->success = (bool) filter_var($value, FILTER_VALIDATE_URL);
 
         return $this->success;

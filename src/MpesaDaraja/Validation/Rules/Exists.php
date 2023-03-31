@@ -65,7 +65,7 @@ class Exists extends AbstractRule
      */
     public function validate($value, $valueIdentifier = null)
     {
-        $this->value   = $value;
+        $this->value = $value;
         $transactionKey = $this->options['exists_in'];
         $this->updateLabeledMessage($transactionKey);
         $this->success = !isset($this->transactions[$transactionKey]) || in_array($value, $this->transactions[$transactionKey]);

@@ -35,13 +35,18 @@ abstract class AbstractRule
     {
         return $this->message;
     }
-
+    
+    public function getOptions()
+    {
+        return $this->options;
+    }
+    
     public function getLabeledMessage()
     {
         return $this->labeledMessage;
     }
 
-    public function setLabeledMessage($label)
+    public function setLabeledMessage($label): void
     {
         $this->labeledMessage = str_replace(':attribute', $label, $this->labeledMessage);
     }
@@ -64,13 +69,17 @@ abstract class AbstractRule
         return $this;
     }
     
-    public function setOptions($options)
+    public function setOptions($options): static
     {
         foreach ($options as $name => $value) {
             $this->options[$name] = $value;
         }
         return $this;
     }
-
-
+    
+    public function getContext(): ArrayWrapper
+    {
+        return $this->context;
+    }
+    
 }

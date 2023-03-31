@@ -16,7 +16,7 @@ class Min extends AbstractRule
      */
     public function validate($value, $valueIdentifier = null)
     {
-        $this->value   = $value;
+        $this->value = $value;
         $this->updateLabeledMessage();
         $minLength = (int) $this->options['min'];
         $this->success = strlen($value) >= $minLength;

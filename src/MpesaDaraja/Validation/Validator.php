@@ -44,9 +44,6 @@ class Validator implements ValidatorInterface
             if(str_contains($rule, ':')){
                 $rule = strtok($rule, ':');
                 $option = strtok( '' );
-                if($rule === 'required_if'){
-                    $options[$option] = $option;
-                }
                 $options[$rule] = $option;
             }
             $this->ensureSelectorRulesExist($param);

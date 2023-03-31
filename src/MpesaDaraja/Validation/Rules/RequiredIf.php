@@ -11,7 +11,7 @@ namespace Ssiva\MpesaDaraja\Validation\Rules;
 class RequiredIf extends AbstractRule
 {
     protected $message = 'This field is required!';
-    protected $labeledMessage = 'The :attribute is required if :value is selected!';
+    protected $labeledMessage = 'The :attribute is required if :value is set!';
     
     protected array $transactions = [
         'CommandID_c2b' => [
@@ -24,12 +24,13 @@ class RequiredIf extends AbstractRule
      */
     public function validate($value, $valueIdentifier = null)
     {
-        $this->value   = $value;
+        $this->value = $value;
         $transactionKey = $this->options['required_if'];
+
         $this->updateLabeledMessage($transactionKey);
-    
-        $this->success = ($value !== null && $value !== '');
-        // $this->success = !isset($this->transactions[$transactionKey]) || in_array($value, $this->transactions[$transactionKey]);
+        $conditionalIdentifier = strtok($transactionKey, '_');
+        $conditionalValue = $this->getContext()->getItemValue($conditionalIdentifier);
+        $this->success = !(in_array($conditionalValue, $this->transactions[$transactionKey]) && ($value === null || $value === ''));
 
         return $this->success;
     }
