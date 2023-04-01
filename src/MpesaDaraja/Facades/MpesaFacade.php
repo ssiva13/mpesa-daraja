@@ -18,6 +18,6 @@ class MpesaFacade extends Facade
      */
     protected static function getFacadeAccessor(): string
     {
-        return 'mpesa-daraja';
+        return 'Ssiva\MpesaDaraja\Mpesa';
     }
 }
