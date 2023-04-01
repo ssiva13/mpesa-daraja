@@ -11,12 +11,15 @@ The project is compatible with the composer dependency management tool.
 - #### Laravel Installation
     ```
     composer require "ssiva/mpesa-daraja":"dev-laravel"
-    ```
+    ``` 
+    #### &nbsp; &nbsp; How to implement it? [Read docs here](docs/laravel.md).
+
 - #### Laravel Lumen Installation
     ```
     composer require "ssiva/mpesa-daraja":"dev-lumen"
     ```
-  
+    #### &nbsp; &nbsp; How to implement it? [Read docs here](docs/lumen.md).
+
 - #### Yii2 Installation -- coming soon
     ```
     composer require "ssiva/mpesa-daraja":"dev-yii"
@@ -27,7 +30,7 @@ The project is compatible with the composer dependency management tool.
     composer require "ssiva/mpesa-daraja":"dev-symfony"
     ```
 
-- #### Installation Without Composer  -- coming soon
+- #### Installation Without Composer -- coming soon
     ```
     git clone https://github.com/ssiva13/mpesa-daraja.git
     ```
@@ -35,17 +38,14 @@ The project is compatible with the composer dependency management tool.
 
   Download Zip from `https://github.com/ssiva13/mpesa-daraja/archive/refs/heads/develop.zip`
 
-
 ## Contributors
-I express my appreciation to the Ninjas who assisted me throughout the integration process and taught me valuable lessons or provided useful code during the journey.
 
-|                                                                                                                                          |                                                                                                                                              |
-|------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------|
-| [<img src="https://avatars.githubusercontent.com/u/20058478?v=4" width="100px;"/><br/><sub>Simon Siva</sub>](https://github.com/ssiva13) | [<img src="https://avatars.githubusercontent.com/u/37109790?v=4" width="100px;"/><br/><sub>Kelvin Mukotso</sub>](https://github.com/mukotso) |
+I express my appreciation to the Ninjas who assisted me throughout the integration process and taught me valuable
+lessons or provided useful code during the journey.
 
- 
-
-
+|                                                                                                                                                        |                                                                                                                                                            |
+|--------------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| [<img src="https://avatars.githubusercontent.com/u/20058478?v=4" height="60px;" width="60px;"/><br/><sub>Simon Siva</sub>](https://github.com/ssiva13) | [<img src="https://avatars.githubusercontent.com/u/37109790?v=4" height="60px;" width="60px;"/><br/><sub>Kelvin Mukotso</sub>](https://github.com/mukotso) |
 
 ## License
 
