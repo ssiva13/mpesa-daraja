@@ -109,7 +109,7 @@ class CheckoutController extends Controller {
         $mpesaDaraja = new MpesaDaraja();
         
         // authenticate
-        $mpesaDaraja->authenticate($stkParams);
+        $mpesaDaraja::authenticate();
         
         // STK Push
         $stkParams = [
@@ -119,13 +119,13 @@ class CheckoutController extends Controller {
             'AccountReference' => '13',
             'TransactionDesc' => 'Shopping',
         ];
-       $mpesaDaraja->stkPush($stkParams);
+       $mpesaDaraja::stkPush($stkParams);
        
        // stk push status query
        $stkQueryParams = [
          'CheckoutRequestID' => "ws_CO_290320231617432767XXXXXXXX",
        ];
-       $mpesaDaraja->stkPushQuery($stkQueryParams);
+       $mpesaDaraja::stkPushQuery($stkQueryParams);
        
        // transaction status query
        $statusParams = [
@@ -133,7 +133,7 @@ class CheckoutController extends Controller {
          "TransactionID" => "RCC3LAPCEL",
          "Occasion" => "Optional Value for Occasion"
        ];
-       $mpesaDaraja->transactionStatus($statusParams);
+       $mpesaDaraja::transactionStatus($statusParams);
 
    }
 }
