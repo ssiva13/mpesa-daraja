@@ -17,28 +17,35 @@ Source Code [Mpesa Daraja](https://github.com/ssiva13/mpesa-daraja/tree/lumen)
     composer require "ssiva/mpesa-daraja":"dev-lumen"
     ```
 
-2) Open your `config/app.php` and add the following to the `providers` array:
+2) Open your `bootstrap/app.php` and make the following changes:
 
-    ```php
-    // Mpesa ServiceProvider
-    Ssiva\MpesaDaraja\MpesaServiceProvider::class,
-    ```
+   - uncomment and edit the following line
 
-3) In the same `config/app.php` and add the following to the `aliases` array:
+      ```php
+      // $app->withFacades();
+      ``` 
+      to
+      ```php
+      $app->withFacades(true, [
+           'Ssiva\MpesaDaraja\Facades\MpesaFacade' => 'MpesaDaraja',
+      ]);
+      ``` 
 
-    ```php
-    'MpesaDaraja' => Ssiva\MpesaDaraja\Facades\MpesaFacade::class,
-    ```
+   - Register the Mpesa ServiceProvider
+     ```php
+     // Mpesa ServiceProvider
+     $app->register(Ssiva\MpesaDaraja\MpesaServiceProvider::class);
+     ```
 
-4) Run the command below to publish the package config file `config/mpesa.php`:
+3) Run the command below to publish the package config file `config/mpesa.php`:
 
     ```shell
     php artisan vendor:publish --tag=mpesa_config
     ```
 
 ### Configuration
-Set up the config values as required
 
+Set up the config values as required
 
 1) Account API Online Config
    ```dotenv
