@@ -27,21 +27,15 @@ Source Code [Mpesa Daraja](https://github.com/ssiva13/mpesa-daraja/tree/lumen)
       to
       ```php
       $app->withFacades(true, [
-           'Ssiva\MpesaDaraja\Facades\MpesaFacade' => 'MpesaDaraja',
+            \Ssiva\MpesaDaraja\Facades\MpesaFacade::class => 'MpesaDaraja',
       ]);
       ``` 
 
    - Register the Mpesa ServiceProvider
      ```php
      // Mpesa ServiceProvider
-     $app->register(Ssiva\MpesaDaraja\MpesaServiceProvider::class);
+     $app->register(\Ssiva\MpesaDaraja\MpesaServiceProvider::class);
      ```
-
-3) Run the command below to publish the package config file `config/mpesa.php`:
-
-    ```shell
-    php artisan vendor:publish --tag=mpesa_config
-    ```
 
 ### Configuration
 
@@ -116,7 +110,7 @@ class CheckoutController extends Controller {
         $mpesaDaraja = new MpesaDaraja();
         
         // authenticate
-        $mpesaDaraja->authenticate($stkParams);
+        $mpesaDaraja::authenticate($stkParams);
         
         // STK Push
         $stkParams = [
@@ -126,13 +120,13 @@ class CheckoutController extends Controller {
             'AccountReference' => '13',
             'TransactionDesc' => 'Shopping',
         ];
-       $mpesaDaraja->stkPush($stkParams);
+       $mpesaDaraja::stkPush($stkParams);
        
        // stk push status query
        $stkQueryParams = [
          'CheckoutRequestID' => "ws_CO_290320231617432767XXXXXXXX",
        ];
-       $mpesaDaraja->stkPushQuery($stkQueryParams);
+       $mpesaDaraja::stkPushQuery($stkQueryParams);
        
        // transaction status query
        $statusParams = [
@@ -140,7 +134,7 @@ class CheckoutController extends Controller {
          "TransactionID" => "RCC3LAPCEL",
          "Occasion" => "Optional Value for Occasion"
        ];
-       $mpesaDaraja->transactionStatus($statusParams);
+       $mpesaDaraja::transactionStatus($statusParams);
 
    }
 }
