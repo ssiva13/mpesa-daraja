@@ -2,7 +2,6 @@
 
 namespace Ssiva\MpesaDaraja;
 
-use Ssiva\MpesaDaraja\Mpesa;
 use Illuminate\Support\ServiceProvider;
 
 /**
@@ -17,9 +16,9 @@ class MpesaServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        // $this->publishes([
-        //     __DIR__.'/../config/mpesa.php' => config_path('mpesa.php')
-        // ], 'mpesa_config');
+        $this->publishes([
+            __DIR__.'/../config/mpesa.php' => config_path('mpesa.php')
+        ], 'mpesa_config');
     }
     
     /**
@@ -27,8 +26,9 @@ class MpesaServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind('mpesa-daraja', function () {
-            return new Mpesa();
+        $this->app->bind('Ssiva\MpesaDaraja\Mpesa', function ($app) {
+            $config = $app['config']->get('mpesa');
+            return new Mpesa($config);
         });
     }
 }
