@@ -110,7 +110,7 @@ class CheckoutController extends Controller {
         $mpesaDaraja = new MpesaDaraja();
         
         // authenticate
-        $mpesaDaraja::authenticate($stkParams);
+        $mpesaDaraja::authenticate();
         
         // STK Push
         $stkParams = [
