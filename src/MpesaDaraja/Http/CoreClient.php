@@ -62,13 +62,17 @@ class CoreClient
             ],
         ]);
     }
-
+    
     /**
      * Validate the current package state.
+     *
+     * @throws \Ssiva\MpesaDaraja\Exceptions\ConfigurationException
      */
     private function setBaseUrl(): void
     {
-        $apiRoot = $this->config->get('mpesa.api_url', '');
+        if(!$apiRoot = $this->config->get('mpesa.api_url', '')){
+            $this->throwConfigException('MPESA_URL is not set!');
+        }
         if (!str_ends_with($apiRoot, '/')) {
             $apiRoot = $apiRoot . '/';
         }
