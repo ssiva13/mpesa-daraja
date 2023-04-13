@@ -132,6 +132,7 @@ if (! function_exists('computeSecurityCredential')) {
         return base64_encode($encrypted);
     }
 }
+
 if (! function_exists('getConfigParams')) {
     function getConfigParams($type): array
     {
@@ -149,6 +150,14 @@ if (! function_exists('getConfigParams')) {
             $initiator, $commandId, $initiatorPass,
             $securityCert, $identifierType
         ];
+    }
+}
+
+if (! function_exists('getEnvValue')) {
+    function getEnvValue($name, $default = null)
+    {
+        $value = getenv($name);
+        return $value ?: $default;
     }
 }
 
