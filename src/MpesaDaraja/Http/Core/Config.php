@@ -30,6 +30,9 @@ class Config implements ConfigurationStore, ArrayAccess
         if (\is_file($userConfig)) {
             $custom = require $userConfig;
         }
+        if (isset($custom['configs'])){
+            $custom = $custom['configs'];
+        }
         $this->items = array_merge($defaultConfig, $custom);
     }
     
