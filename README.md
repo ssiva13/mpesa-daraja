@@ -12,18 +12,19 @@ The project is compatible with the composer dependency management tool.
     ```
     composer require ssiva/mpesa-laravel-sdk
     ``` 
-    #### &nbsp; &nbsp; How to implement it? [Read docs here](https://github.com/ssiva13/mpesa-laravel-sdk/blob/v1.1.5/README.md).
+    #### How to implement it? [Read docs here](https://github.com/ssiva13/mpesa-laravel-sdk/blob/v1.1.5/README.md).
 
 - #### Laravel Lumen Installation
     ```
     composer require ssiva/mpesa-lumen-sdk
     ```
-    #### &nbsp; &nbsp; How to implement it? [Read docs here](https://github.com/ssiva13/mpesa-lumen-sdk#readme).
+    #### How to implement it? [Read docs here](https://github.com/ssiva13/mpesa-lumen-sdk#readme).
 
-- #### Yii2 Installation -- coming soon
+- #### Yii2 Installation
     ```
-    composer require "ssiva/mpesa-daraja":"dev-yii"
+    composer require --prefer-dist ssiva/yii2-mpesa-sdk
     ```
+    #### How to implement it? [Read docs here](https://github.com/ssiva13/yii2-mpesa-sdk#readme).
 
 - #### Symfony Installation -- coming soon
     ```
